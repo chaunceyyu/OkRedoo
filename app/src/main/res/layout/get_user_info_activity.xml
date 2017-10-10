@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="10dp">
+
+    <EditText android:id="@+id/username"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:layout_centerVertical="true"
+              android:hint="Username"
+              android:textSize="16dp"/>
+
+    <EditText android:id="@+id/phone"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="5dp"
+              android:hint="Phone Number"
+              android:inputType="phone"
+              android:lines="1"
+              android:textSize="16dp"/>
+
+    <EditText android:id="@+id/password"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="5dp"
+              android:hint="Password"
+              android:inputType="number"
+              android:lines="1"
+              android:textSize="16dp"/>
+
+    <EditText android:id="@+id/token"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="5dp"
+              android:hint="Token"
+              android:lines="1"
+              android:textSize="16dp"/>
+
+    <Button android:id="@+id/getTokenBtn"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="获取用户信息"
+            android:textSize="14dp"/>
+
+    <Button android:id="@+id/saveBtn"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="保存"
+            android:textSize="14dp"/>
+
+</LinearLayout>

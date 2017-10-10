@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.youzi.okredoo.AccountListActivity">
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="40dp"
+                  android:orientation="horizontal">
+
+        <Button android:id="@+id/lianjieBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="连接IM"
+                android:textSize="12dp"/>
+
+        <Button android:id="@+id/startOrStopBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="启动监听"
+                android:textSize="12dp"/>
+
+        <Button android:id="@+id/refreshBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="刷新数据"
+                android:textSize="12dp"/>
+
+        <Button android:id="@+id/suduBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="速度设置"
+                android:textSize="12dp"/>
+
+        <Button android:id="@+id/autoCloseBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="延时关闭"
+                android:textSize="12dp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="40dp"
+                  android:orientation="horizontal">
+
+        <Button android:id="@+id/jiantingBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="数据统计"
+                android:textSize="12dp"/>
+
+        <Button android:id="@+id/sendCoinBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="发送金币"
+                android:textSize="12dp"/>
+
+        <Button android:id="@+id/onlineBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="在线账号"
+                android:textSize="12dp"/>
+
+        <Button android:id="@+id/accountBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="账号列表"
+                android:textSize="12dp"/>
+
+        <Button android:id="@+id/exitBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="退出"
+                android:textSize="12dp"/>
+
+    </LinearLayout>
+
+    <View android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:background="@color/split_color"/>
+
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_alignParentLeft="true"
+                      android:layout_centerVertical="true"
+                      android:gravity="center_vertical">
+
+            <ProgressBar android:id="@+id/progress"
+                         android:layout_width="20dp"
+                         android:layout_height="20dp"
+                         android:layout_margin="5dp"/>
+
+            <TextView android:id="@+id/state_text"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="5dp"
+                      android:text="正在监听中..."
+                      android:textColor="@color/green_weixin"
+                      android:textSize="12dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_alignParentRight="true"
+                      android:layout_centerVertical="true"
+                      android:gravity="center_vertical"
+                      android:orientation="horizontal"
+                      android:paddingBottom="7dp"
+                      android:paddingLeft="10dp"
+                      android:paddingRight="10dp"
+                      android:paddingTop="7dp">
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:lines="1"
+                      android:text="总金币 "
+                      android:textColor="@color/black65"
+                      android:textSize="14dp"/>
+
+            <TextView android:id="@+id/coin"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="5dp"
+                      android:lines="1"
+                      android:text="0"
+                      android:textColor="@color/king_one"
+                      android:textSize="16dp"
+                      android:textStyle="bold"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <ListView android:id="@+id/listview"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:divider="@null"
+              android:dividerHeight="0dp"
+              android:fastScrollEnabled="true"
+              android:stackFromBottom="true"
+              android:transcriptMode="alwaysScroll"/>
+
+
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="33dp">
+
+        <Button android:id="@+id/clearBtn"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="清屏"
+                android:textSize="10dp"/>
+
+        <Button android:id="@+id/gundongBtn"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/clearBtn"
+                android:text="滚屏"
+                android:textSize="10dp"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="25dp">
+
+        <TextView android:id="@+id/dataCount"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerVertical="true"
+                  android:layout_marginLeft="5dp"
+                  android:minWidth="40dp"
+                  android:text="0"
+                  android:textColor="@color/gray"
+                  android:textSize="12dp"/>
+
+        <TextView android:id="@+id/speed"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerVertical="true"
+                  android:layout_marginLeft="10dp"
+                  android:layout_toRightOf="@+id/dataCount"
+                  android:text="000-0000ms"
+                  android:textColor="@color/liji_material_blue_700"
+                  android:textSize="12dp"/>
+
+        <TextView android:id="@+id/delayTime"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerVertical="true"
+                  android:layout_marginLeft="10dp"
+                  android:layout_toRightOf="@+id/speed"
+                  android:text="00:00:00"
+                  android:textColor="@color/red_weixing"
+                  android:textSize="12dp"/>
+
+        <ProgressBar android:id="@+id/progress2"
+                     android:layout_width="15dp"
+                     android:layout_height="15dp"
+                     android:layout_alignParentRight="true"
+                     android:layout_centerVertical="true"
+                     android:layout_marginRight="10dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
