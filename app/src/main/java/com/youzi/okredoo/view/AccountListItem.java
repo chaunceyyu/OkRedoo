@@ -87,7 +87,7 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
 
         if (mUser.getOnline() == 1) {
             addOnlineBtn.setEnabled(false);
-            addOnlineBtn.setText("在线账号");
+            addOnlineBtn.setText("已是在线账号");
         } else {
             addOnlineBtn.setEnabled(true);
             addOnlineBtn.setText("加入在线账号");
@@ -117,6 +117,7 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
         } else if (view == addOnlineBtn) {
             mUser.setOnline(1);
             DBManager.getInstance().updateUser(mUser);
+            bindData();
         } else if (view == editInfoBtn) {
         }
     }
