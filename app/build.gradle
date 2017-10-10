@@ -14,13 +14,32 @@ android {
         versionName "1.0"
     }
 
+    signingConfigs {
+        release {
+            storeFile file('tudouni.jks')
+            storePassword "tudouni"
+            keyAlias "1.0"
+            keyPassword "tudouni"
+        }
+
+    }
+
     buildTypes {
         release {
             shrinkResources false
             jniDebuggable false
             debuggable true
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            shrinkResources false
+            jniDebuggable false
+            minifyEnabled false
+            debuggable true
+            signingConfig signingConfigs.release
         }
     }
 
