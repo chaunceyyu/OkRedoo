@@ -29,6 +29,10 @@
 
         <activity android:name=".UserInfoEditActivity"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".StatisticsActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".SendRedPackActivity"
+                  android:screenOrientation="portrait"/>
 
     </application>
 
