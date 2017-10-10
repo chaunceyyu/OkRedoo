@@ -264,7 +264,7 @@ public class RedListener {
 //    }
 
 
-    private void redPackROB(final String rpid, final User user, String type, String targetId) {
+    public void redPackROB(final String rpid, final User user, String type, String targetId) {
         Map<String, String> params = new HashMap<>();
         params.put("rpid", rpid);
         params.put("conversationType", type);
