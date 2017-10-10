@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.youzi.okredoo.adapter.AccountListAdapter;
 import com.youzi.okredoo.data.UserList;
@@ -24,6 +25,8 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
     private AccountListAdapter mAdapter;
     private Button mAddBtn;
 
+    private TextView coin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +35,26 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
         initView();
         loadData();
 
+        bindData();
         EventBus.getDefault().register(this);
     }
+
+    private void bindData() {
+        coin.setText(String.valueOf(getCoins()));
+    }
+
+    private int getCoins() {
+        UserList users = App.getUserList();
+        if (users.isEmpty()) {
+            return 0;
+        }
+        int coins = 0;
+        for (int i = 0; i < users.size(); i++) {
+            coins += Integer.valueOf(users.get(i).getCoins());
+        }
+        return coins;
+    }
+
 
     @Override
     protected void onDestroy() {
@@ -53,9 +74,8 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
 
     private void loadData() {
         UserList users = App.getUserList();
-        if (users != null) {
-            mAdapter.changeDataSet(users);
-        }
+        mAdapter.changeDataSet(users);
+        bindData();
     }
 
     private void initView() {
@@ -65,6 +85,7 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
         mListView.setAdapter(mAdapter);
 
         mAddBtn = (Button) findViewById(R.id.addBtn);
+        coin = (TextView) findViewById(R.id.coin);
         mAddBtn.setOnClickListener(this);
     }
 

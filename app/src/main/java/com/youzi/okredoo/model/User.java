@@ -68,6 +68,8 @@ public class User implements Serializable {
     private String cover;
     private String pwd;
 
+    private int online;//是否在线
+
     public boolean getNotify() {
         return notify;
     }
@@ -235,14 +237,14 @@ public class User implements Serializable {
         this.pwd = pwd;
     }
 
-    @Generated(hash = 1228597236)
+    @Generated(hash = 601802758)
     public User(String birthday, String city, String coins, String fans, String follows, String grade,
             String hots, String nickName, String photo, String role, String sex, String signature, String token,
             String uid, String phone, String invistCode, String unumber, String rongtoken, String gradeName,
             String expense, String stamp, String experience, String isFollowFan, String background,
             String realname, String idNumber, String frontPhoto, String backPhoto, String profit,
             String strangerreminder, boolean appreminder, boolean zhengdong, String groupAgree, boolean notify,
-            int bindPhoneStatus, String cover, String pwd) {
+            int bindPhoneStatus, String cover, String pwd, int online) {
         this.birthday = birthday;
         this.city = city;
         this.coins = coins;
@@ -280,6 +282,7 @@ public class User implements Serializable {
         this.bindPhoneStatus = bindPhoneStatus;
         this.cover = cover;
         this.pwd = pwd;
+        this.online = online;
     }
 
     public String getBirthday() {
@@ -453,5 +456,13 @@ public class User implements Serializable {
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
+    }
+
+    public int getOnline() {
+        return online;
+    }
+
+    public void setOnline(int online) {
+        this.online = online;
     }
 }

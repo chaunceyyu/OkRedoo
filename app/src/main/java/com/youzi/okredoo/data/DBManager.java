@@ -60,4 +60,8 @@ public class DBManager {
         User user = mUserDao.queryBuilder().where(UserDao.Properties.Uid.eq(uid)).uniqueOrThrow();
         return user;
     }
+
+    public void updateOnline(User user) {
+        mUserDao.update(user);
+    }
 }

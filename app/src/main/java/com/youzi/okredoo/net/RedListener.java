@@ -16,7 +16,6 @@ import com.youzi.okredoo.msgtype.RedPackMsg;
 import org.simple.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +33,7 @@ public class RedListener {
     private static final String TAG = "OkRedoo";
 
     private static final int LOOP_MESSAGE_ENTER = 1;
-    private static final int LOOP_MESSAGE_EXIT = 2;
+//    private static final int LOOP_MESSAGE_EXIT = 2;
 
     private static final String RECEIVE_MSG = "receive_message_data";
 
@@ -79,31 +78,27 @@ public class RedListener {
 
             switch (msg.what) {
                 case LOOP_MESSAGE_ENTER:
-//                    checkExitTime();
-                    loadLiveList();
-                    mHandler.sendEmptyMessageDelayed(LOOP_MESSAGE_EXIT, 2 * 60 * 1000);
-                    break;
-                case LOOP_MESSAGE_EXIT:
                     exitAll();
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            loadLiveList();
+                            mHandler.sendEmptyMessageDelayed(LOOP_MESSAGE_ENTER, 3 * 60 * 1000);
+                        }
+                    }, 2000);
                     break;
+//                case LOOP_MESSAGE_EXIT:
+//                    exitAll();
+//                    break;
 
             }
         }
     };
 
-    private void checkExitTime() {
-        Calendar c = Calendar.getInstance();
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        Log.d(TAG, "checkExitTime:" + hour);
-        if (hour >= 1) {
-            System.exit(0);
-        }
-    }
-
     private void start() {
         mHandler.removeMessages(LOOP_MESSAGE_ENTER);
-        mHandler.removeMessages(LOOP_MESSAGE_EXIT);
-        mHandler.sendEmptyMessageDelayed(LOOP_MESSAGE_ENTER, 2 * 1000);
+//        mHandler.removeMessages(LOOP_MESSAGE_EXIT);
+        mHandler.sendEmptyMessage(LOOP_MESSAGE_ENTER);
     }
 
     public static void init(Context context) {
@@ -159,8 +154,8 @@ public class RedListener {
     }
 
     private void exitAll() {
-        mHandler.removeMessages(LOOP_MESSAGE_ENTER);
-        mHandler.removeMessages(LOOP_MESSAGE_EXIT);
+//        mHandler.removeMessages(LOOP_MESSAGE_ENTER);
+//        mHandler.removeMessages(LOOP_MESSAGE_EXIT);
         mLiveExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -168,9 +163,9 @@ public class RedListener {
                     final LiveRoom liveRoom = new LiveRoom(mLiveList.get(i));
                     liveRoom.exit();
                 }
-                if (isEnable()) {
-                    mHandler.sendEmptyMessageDelayed(LOOP_MESSAGE_ENTER, 3000);
-                }
+//                if (isEnable()) {
+//                    mHandler.sendEmptyMessageDelayed(LOOP_MESSAGE_ENTER, 3000);
+//                }
             }
         });
     }
@@ -178,7 +173,7 @@ public class RedListener {
     public void receiveMessage(final Message message) {
         if (isEnable()) {
             dealRedMessage(message);
-            notifyLiveRoomMessage(message);
+//            notifyLiveRoomMessage(message);
         }
     }
 
@@ -190,12 +185,12 @@ public class RedListener {
 
                 final RedPackMsg redMessage = (RedPackMsg) message.getContent();
 
-                Log.w(TAG, "Coming Red --> rpid:" + redMessage.getRpid() + "|senderName:" + redMessage.getSenderName() + "|senderId:" +
+                Log.w(TAG, "Coming Red Pack -> rpid:" + redMessage.getRpid() + "|senderName:" + redMessage.getSenderName() + "|senderId:" +
                         redMessage
                                 .getSenderId() + "|type:" + message.getConversationType().getName() + "|targetId:" + message
                         .getTargetId());
 
-                postMessageTxt("Coming Red --> rpid:" + redMessage.getRpid() + "|senderName:" + redMessage.getSenderName() + "|senderId:" +
+                postMessageTxt("Coming Red Pack -> rpid:" + redMessage.getRpid() + "|senderName:" + redMessage.getSenderName() + "|senderId:" +
                         redMessage
                                 .getSenderId() + "|type:" + message.getConversationType().getName() + "|targetId:" + message
                         .getTargetId());

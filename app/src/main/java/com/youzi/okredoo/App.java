@@ -4,10 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.youzi.okredoo.data.DBManager;
 import com.youzi.okredoo.data.UserList;
+import com.youzi.okredoo.gendao.UserDao;
 import com.youzi.okredoo.model.User;
 import com.youzi.okredoo.msgtype.BarrageMsg;
 import com.youzi.okredoo.msgtype.CardMsg;
@@ -40,8 +39,6 @@ import com.youzi.okredoo.util.AppUtil;
 
 import org.xutils.x;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 import io.rong.imlib.AnnotationNotFoundException;
@@ -55,9 +52,6 @@ import io.rong.imlib.model.Message;
 public class App extends Application {
 
     private static Context sContext;
-
-    //    public static UserList sUserList = new UserList();
-    public static UserList sOnlineUserList = new UserList();
 
     @Override
     public void onCreate() {
@@ -80,29 +74,27 @@ public class App extends Application {
         });
 
         registerMessageType();
-
-        loadOnlineUserData();
     }
 
     public static UserList getUserList() {
         List<User> userList = DBManager.getInstance().getUserDao().loadAll();
+        UserList sUserList = new UserList();
         if (userList != null) {
-            UserList sUserList = new UserList();
             sUserList.clear();
             sUserList.addAll(userList);
-            return sUserList;
         }
-        return null;
+        return sUserList;
     }
 
-    public static void loadOnlineUserData() {
-        String json = getSP().getString("onlineUserList", null);
-        Type type = new TypeToken<ArrayList<User>>() {
-        }.getType();
-        List<User> userList = new Gson().fromJson(json, type);
-        if (userList != null) {
-            sOnlineUserList.addAll(userList);
+    public UserList getOnlineUserList() {
+        List<User> users = DBManager.getInstance().getUserDao()
+                .queryBuilder().where(UserDao.Properties.Online.eq(1)).list();
+        UserList sUserList = new UserList();
+        if (users != null) {
+            sUserList.clear();
+            sUserList.addAll(users);
         }
+        return sUserList;
     }
 
     public static SharedPreferences getSP() {
@@ -170,7 +162,7 @@ public class App extends Application {
         } catch (AnnotationNotFoundException e) {
             e.printStackTrace();
         }
-        
+
 
     }
 }

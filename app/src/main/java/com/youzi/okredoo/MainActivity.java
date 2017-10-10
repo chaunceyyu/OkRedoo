@@ -236,7 +236,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     private void refreshUserListInfo() {
         UserList users = App.getUserList();
-        if (users == null) {
+        if (users.isEmpty()) {
             showToast("无用户数据");
             return;
         }
@@ -278,7 +278,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private void connectIM() {
         UserList users = App.getUserList();
         if (users.isEmpty()) {
-            showToast("先添加账号");
+            showToast("先添加账号才能连接IM");
             return;
         }
 
@@ -294,6 +294,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             @Override
             public void onFailure(ServiceException e) {
                 super.onFailure(e);
+                closeProgress();
             }
         });
     }
@@ -335,6 +336,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         RongIMClient.connect(token, new RongIMClient.ConnectCallback() {
             @Override
             public void onTokenIncorrect() {    //这个方法不在uiThread回调
+                closeProgress();
+                showToast("onTokenIncorrect");
             }
 
             @Override
@@ -347,6 +350,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
+                closeProgress();
+                showToast(errorCode.getMessage());
             }
         });
     }
@@ -463,7 +468,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     public int getCoins() {
         UserList users = App.getUserList();
-        if (users == null) {
+        if (users.isEmpty()) {
             return 0;
         }
         int coins = 0;
