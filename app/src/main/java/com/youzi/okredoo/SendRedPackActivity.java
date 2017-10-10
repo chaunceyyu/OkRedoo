@@ -1,5 +1,7 @@
 package com.youzi.okredoo;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -13,5 +15,10 @@ public class SendRedPackActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.send_pack_activity);
+    }
+
+    public static Intent createIntent(Context context) {
+        Intent intent = new Intent(context, SendRedPackActivity.class);
+        return intent;
     }
 }

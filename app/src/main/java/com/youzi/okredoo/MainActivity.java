@@ -53,6 +53,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private Button gundongBtn;
     private Button exitBtn;
     private Button onlineBtn;
+    private Button tongjiBtn;
+    private Button sendCoinBtn;
 
     private ProgressBar mProgressBar;
     private ProgressBar mProgressBar2;
@@ -119,6 +121,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         gundongBtn = (Button) findViewById(R.id.gundongBtn);
         exitBtn = (Button) findViewById(R.id.exitBtn);
         onlineBtn = (Button) findViewById(R.id.onlineBtn);
+        tongjiBtn = (Button) findViewById(R.id.tongjiBtn);
+        sendCoinBtn = (Button) findViewById(R.id.sendCoinBtn);
 
         mListView = (ListView) findViewById(R.id.listview);
         mListView.setOnScrollListener(this);
@@ -148,6 +152,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         gundongBtn.setOnClickListener(this);
         exitBtn.setOnClickListener(this);
         onlineBtn.setOnClickListener(this);
+        tongjiBtn.setOnClickListener(this);
+        sendCoinBtn.setOnClickListener(this);
 
         mAdapter = new ListenerDataListAdapter(mContext);
         mListView.setAdapter(mAdapter);
@@ -198,24 +204,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onClick(View view) {
         if (view == startOrStopBtn) {
-            if (RedListener.get().isEnable()) {
-                RedListener.get().disabled();
-                mProgressBar.setVisibility(View.INVISIBLE);
-                stateTxt.setVisibility(View.INVISIBLE);
-                startOrStopBtn.setText("启动监听");
-
-            } else {
-                if (App.getOnlineUserList().isEmpty()) {
-                    showToast("无在线账号");
-                    return;
-                }
-                RedListener.get().enabled();
-                mProgressBar.setVisibility(View.VISIBLE);
-                stateTxt.setVisibility(View.VISIBLE);
-                stateTxt.setText("正在运行...");
-                startOrStopBtn.setText("关闭监听");
-
-            }
+            startOrStop();
         } else if (view == suduBtn) {
             showSpeedMenu();
         } else if (view == autoCloseBtn) {
@@ -234,6 +223,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             System.exit(0);
         } else if (view == onlineBtn) {
             startActivity(OnlineAccountListActivity.createIntent(mContext));
+        } else if (view == tongjiBtn) {
+            startActivity(StatisticsActivity.createIntent(mContext));
+        } else if (view == sendCoinBtn) {
+            startActivity(SendRedPackActivity.createIntent(mContext));
+        }
+    }
+
+    private void startOrStop() {
+        if (RedListener.get().isEnable()) {
+            RedListener.get().disabled();
+            mProgressBar.setVisibility(View.INVISIBLE);
+            stateTxt.setVisibility(View.INVISIBLE);
+            startOrStopBtn.setText("启动监听");
+
+        } else {
+            if (App.getOnlineUserList().isEmpty()) {
+                showToast("无在线账号");
+                return;
+            }
+            RedListener.get().enabled();
+            mProgressBar.setVisibility(View.VISIBLE);
+            stateTxt.setVisibility(View.VISIBLE);
+            stateTxt.setText("正在运行...");
+            startOrStopBtn.setText("关闭监听");
+
         }
     }
 
