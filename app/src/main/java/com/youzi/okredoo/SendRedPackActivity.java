@@ -15,8 +15,17 @@ import com.youzi.okredoo.adapter.SendPackUserListAdapter;
 import com.youzi.okredoo.data.DBManager;
 import com.youzi.okredoo.data.UserList;
 import com.youzi.okredoo.model.User;
+import com.youzi.okredoo.model.User2;
+import com.youzi.okredoo.net.Api;
+import com.youzi.okredoo.net.RequestUtils;
+import com.youzi.okredoo.net.ResponseCallBack;
+import com.youzi.okredoo.net.ServiceException;
 
-import static com.youzi.okredoo.R.id.photo;
+import org.simple.eventbus.EventBus;
+import org.simple.eventbus.Subscriber;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by zhangjiajie on 2017/10/10.
@@ -41,6 +50,37 @@ public class SendRedPackActivity extends BaseActivity implements View.OnClickLis
         setContentView(R.layout.send_pack_activity);
         initView();
         loadData();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscriber(tag = "refreshTargetUser")
+    private void refreshTargetUser(String msg) {
+        Map<String, String> params = new HashMap<>();
+        RequestUtils.sendPostRequest(Api.GETUSERINFO, mTargetUser.getUid(), mTargetUser.getToken(), params, new ResponseCallBack<User2>() {
+            @Override
+            public void onSuccess(User2 u) {
+                mTargetUser.setCoins(u.getCoins());
+                mTargetUser.setNickName(u.getNickName());
+
+                name.setText(mTargetUser.getNickName());
+                coin.setText(mTargetUser.getCoins());
+                
+                DBManager.getInstance().updateUser(mTargetUser);
+            }
+
+            @Override
+            public void onFailure(ServiceException e) {
+                super.onFailure(e);
+                showToast(e.getMsg());
+            }
+        });
     }
 
     private void initView() {

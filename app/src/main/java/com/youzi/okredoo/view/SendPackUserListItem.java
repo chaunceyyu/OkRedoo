@@ -103,6 +103,10 @@ public class SendPackUserListItem extends LinearLayout implements AppBaseAdapter
     @Override
     public void onClick(View view) {
         if (view == sendBtn) {
+            if (mActivity.getTargetUser() == null) {
+                mActivity.showToast("无目标用户");
+                return;
+            }
             sendHongbao();
         }
     }
@@ -115,8 +119,7 @@ public class SendPackUserListItem extends LinearLayout implements AppBaseAdapter
         Map<String, String> params = new HashMap<>();
         params.put("targetid", mActivity.getTargetUser().getUid());
         params.put("conversationType", String.valueOf(Conversation.ConversationType.CHATROOM.getValue()));
-//        params.put("amount", mUser.getCoins());
-        params.put("amount", "1");
+        params.put("amount", mUser.getCoins());
         params.put("count", "1");
         params.put("ext", "恭喜发财");
         params.put("pass", "");

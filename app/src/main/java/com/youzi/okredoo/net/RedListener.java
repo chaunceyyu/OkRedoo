@@ -277,6 +277,7 @@ public class RedListener {
                 super.onSuccess(data);
                 Log.w(TAG, "REDPACK_ROB onSuccess:" + new Gson().toJson(data));
                 postMessageTxt("REDPACK_ROB onSuccess:" + new Gson().toJson(data));
+                EventBus.getDefault().post("", "refreshTargetUser");
                 getRedInfo(rpid, user);
 
             }
