@@ -1,2 +1,4 @@
 include ':app'
 include ':IMLib'
+include ':PicturePicker'
+include ':UCrop'

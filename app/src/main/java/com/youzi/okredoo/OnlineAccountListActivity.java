@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.youzi.okredoo.adapter.OnlineAccountListAdapter;
 import com.youzi.okredoo.data.UserList;
@@ -25,15 +26,33 @@ public class OnlineAccountListActivity extends BaseActivity implements View.OnCl
     private OnlineAccountListAdapter mAdapter;
     private Button mAddBtn;
 
+    private TextView coin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        setContentView(R.layout.account_list_activity);
+        setContentView(R.layout.online_account_list_activity);
         initView();
         loadData();
-
+        bindData();
         EventBus.getDefault().register(this);
+    }
+
+    private void bindData() {
+        coin.setText(String.valueOf(getCoins()));
+    }
+
+    private int getCoins() {
+        UserList users = App.getUserList();
+        if (users.isEmpty()) {
+            return 0;
+        }
+        int coins = 0;
+        for (int i = 0; i < users.size(); i++) {
+            coins += Integer.valueOf(users.get(i).getCoins());
+        }
+        return coins;
     }
 
     @Override
@@ -55,12 +74,11 @@ public class OnlineAccountListActivity extends BaseActivity implements View.OnCl
     }
 
     private void initView() {
-        findViewById(R.id.topLayout).setVisibility(View.GONE);
         mAdapter = new OnlineAccountListAdapter(mContext);
 
         mListView = (ListView) findViewById(R.id.listview);
         mListView.setAdapter(mAdapter);
-
+        coin = (TextView) findViewById(R.id.coin);
         mAddBtn = (Button) findViewById(R.id.addBtn);
 
     }

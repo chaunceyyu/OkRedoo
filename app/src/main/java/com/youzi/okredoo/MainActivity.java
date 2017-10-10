@@ -205,6 +205,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 startOrStopBtn.setText("启动监听");
 
             } else {
+                if (App.getOnlineUserList().isEmpty()) {
+                    showToast("无在线账号");
+                    return;
+                }
                 RedListener.get().enabled();
                 mProgressBar.setVisibility(View.VISIBLE);
                 stateTxt.setVisibility(View.VISIBLE);
@@ -368,7 +372,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
 
     public void showDelayCloseMenu() {
-        String[] textArray = new String[]{"30min", "60min", "90min", "120min", "180min", "210min", "Cancel"};
+        String[] textArray = new String[]{"30min", "60min", "90min", "120min", "180min", "210min", "240min", "Cancel"};
 
         new MenuDialog(mContext).setMenuText(textArray)
                 .setOnItemClickListener(new MenuDialog.OnItemClickListener() {
@@ -393,6 +397,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                                 break;
                             case 5:
                                 min = 210;
+                                break;
+                            case 6:
+                                min = 240;
                                 break;
                         }
                         RedListener.get().setDelayClose(min);

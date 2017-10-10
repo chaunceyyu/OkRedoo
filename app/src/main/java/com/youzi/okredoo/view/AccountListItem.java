@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youzi.okredoo.GetUserInfoActivity;
 import com.youzi.okredoo.R;
+import com.youzi.okredoo.UserInfoEditActivity;
 import com.youzi.okredoo.adapter.AccountListAdapter;
 import com.youzi.okredoo.adapter.AppBaseAdapter;
 import com.youzi.okredoo.data.DBManager;
@@ -119,6 +120,7 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
             DBManager.getInstance().updateUser(mUser);
             bindData();
         } else if (view == editInfoBtn) {
+            getContext().startActivity(UserInfoEditActivity.createIntent(getContext(), mUser.getUid()));
         }
     }
 }

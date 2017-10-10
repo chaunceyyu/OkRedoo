@@ -39,6 +39,15 @@ android {
             java.srcDir "build/generated/source/greendao"
         }
     }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a'
+        }
+
+    }
 }
 
 dependencies {
@@ -49,8 +58,12 @@ dependencies {
     compile 'org.greenrobot:greendao:3.0.1'
     compile 'org.greenrobot:greendao-generator:3.0.0'
     compile 'org.simple:androideventbus:1.0.5.1'
+
+    compile rootProject.ext.okhttp
     compile rootProject.ext.glide
 
     compile project(':IMLib')
-
+    compile project(':PicturePicker')
+    compile project(':UCrop')
+    compile files('libs/aliyun-oss-sdk-android-2.3.0.jar')
 }

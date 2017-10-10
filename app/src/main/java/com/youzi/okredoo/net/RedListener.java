@@ -195,7 +195,7 @@ public class RedListener {
                                 .getSenderId() + "|type:" + message.getConversationType().getName() + "|targetId:" + message
                         .getTargetId());
 
-                UserList users = App.getUserList();
+                UserList users = App.getOnlineUserList();
                 for (int i = 0; i < users.size(); i++) {
                     final User user = users.get(i);
                     mRedExecutor.execute(new Runnable() {

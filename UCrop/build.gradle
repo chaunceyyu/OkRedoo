@@ -1,0 +1,45 @@
+apply plugin: 'com.android.library'
+android {
+    compileSdkVersion project.compileSdkVersion
+    buildToolsVersion project.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion project.minSdkVersion
+        targetSdkVersion project.targetSdkVersion
+        versionCode 22
+        versionName "2.2.0-native"
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+    dexOptions {
+        preDexLibraries = false
+    }
+
+    sourceSets.main {
+        jni.srcDirs = [];
+    }
+
+}
+
+dependencies {
+
+    compile rootProject.ext.supportV7
+    compile rootProject.ext.supportdesign
+
+    compile rootProject.ext.glide
+    compile rootProject.ext.photoview
+
+    /*rxjava相关*/
+    compile rootProject.ext.rxjava
+    compile rootProject.ext.rxandroid
+    compile rootProject.ext.recyclerview
+}
