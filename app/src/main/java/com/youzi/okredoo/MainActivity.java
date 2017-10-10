@@ -52,6 +52,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private Button clearBtn;
     private Button gundongBtn;
     private Button exitBtn;
+    private Button onlineBtn;
 
     private ProgressBar mProgressBar;
     private ProgressBar mProgressBar2;
@@ -117,6 +118,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         clearBtn = (Button) findViewById(R.id.clearBtn);
         gundongBtn = (Button) findViewById(R.id.gundongBtn);
         exitBtn = (Button) findViewById(R.id.exitBtn);
+        onlineBtn = (Button) findViewById(R.id.onlineBtn);
 
         mListView = (ListView) findViewById(R.id.listview);
         mListView.setOnScrollListener(this);
@@ -145,6 +147,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         clearBtn.setOnClickListener(this);
         gundongBtn.setOnClickListener(this);
         exitBtn.setOnClickListener(this);
+        onlineBtn.setOnClickListener(this);
 
         mAdapter = new ListenerDataListAdapter(mContext);
         mListView.setAdapter(mAdapter);
@@ -225,6 +228,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             mListView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         } else if (view == exitBtn) {
             System.exit(0);
+        } else if (view == onlineBtn) {
+            startActivity(OnlineAccountListActivity.createIntent(mContext));
         }
     }
 

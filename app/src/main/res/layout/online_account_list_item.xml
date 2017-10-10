@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.youzi.okredoo.view.AccountListItem xmlns:android="http://schemas.android.com/apk/res/android"
+<com.youzi.okredoo.view.OnlineAccountListItem xmlns:android="http://schemas.android.com/apk/res/android"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:orientation="vertical"
@@ -86,27 +86,6 @@
                   android:layout_marginTop="0dp"
                   android:gravity="center_vertical|right">
 
-        <Button android:id="@+id/addOnlineBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_delete"
-                android:text="加入在线列表"
-                android:textSize="12dp"/>
-
-        <Button android:id="@+id/editInfoBtn"
-                android:layout_width="60dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_delete"
-                android:text="资料"
-                android:textSize="12dp"/>
-
-        <Button android:id="@+id/editBtn"
-                android:layout_width="60dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_delete"
-                android:text="账号"
-                android:textSize="12dp"/>
-
         <Button android:id="@+id/deleteBtn"
                 android:layout_width="60dp"
                 android:layout_height="35dp"
@@ -123,4 +102,4 @@
           android:layout_marginTop="10dp"
           android:background="@color/split_color"/>
 
-</com.youzi.okredoo.view.AccountListItem>
+</com.youzi.okredoo.view.OnlineAccountListItem>

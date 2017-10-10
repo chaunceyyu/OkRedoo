@@ -86,7 +86,7 @@ public class App extends Application {
         return sUserList;
     }
 
-    public UserList getOnlineUserList() {
+    public static UserList getOnlineUserList() {
         List<User> users = DBManager.getInstance().getUserDao()
                 .queryBuilder().where(UserDao.Properties.Online.eq(1)).list();
         UserList sUserList = new UserList();

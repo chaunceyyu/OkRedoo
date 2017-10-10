@@ -4,13 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.youzi.okredoo.data.DBManager;
-import com.youzi.okredoo.data.UserList;
 import com.youzi.okredoo.model.User;
 import com.youzi.okredoo.net.Api;
 import com.youzi.okredoo.net.RequestUtils;
@@ -37,6 +37,7 @@ public class GetUserInfoActivity extends BaseActivity {
     private EditText mPhoneNumber;
     private EditText mPassword;
     private EditText mToken;
+    private EditText uidEdit;
 
     private Button mSavebBtn;
     private Button mGetTokenBtn;
@@ -55,19 +56,29 @@ public class GetUserInfoActivity extends BaseActivity {
         mPhoneNumber = (EditText) findViewById(R.id.phone);
         mPassword = (EditText) findViewById(R.id.password);
         mToken = (EditText) findViewById(R.id.token);
+        uidEdit = (EditText) findViewById(R.id.uid);
 
         mSavebBtn = (Button) findViewById(R.id.saveBtn);
         mSavebBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (uid == null) {
-                    DBManager.getInstance().saveUser(mUser);
+                if (!TextUtils.isEmpty(uidEdit.getText()) && !TextUtils.isEmpty(mToken.getText())) {
+                    if (mUser == null) {
+                        mUser = new User();
+                        mUser.setUid(uidEdit.getText().toString());
+                        mUser.setToken(mToken.getText().toString());
+                    }
+                    if (uid == null) {
+                        DBManager.getInstance().saveUser(mUser);
+                    } else {
+                        DBManager.getInstance().updateUser(mUser);
+                    }
+                    showToast("保存成功");
+                    EventBus.getDefault().post("", "refresh_user_list");
+                    finish();
                 } else {
-                    DBManager.getInstance().updateUser(mUser);
+                    showToast("token无效");
                 }
-                Toast.makeText(mContext, "保存成功", Toast.LENGTH_SHORT).show();
-                EventBus.getDefault().post("", "refresh_user_list");
-                finish();
             }
         });
 
@@ -76,30 +87,35 @@ public class GetUserInfoActivity extends BaseActivity {
         mGetTokenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String userName = mPhoneNumber.getText().toString();
-                final String password = mPassword.getText().toString();
-                Map<String, String> params = new HashMap<>();
-                params.put("user", userName);
-                params.put("password", password);
-                RequestUtils.sendPostRequest(Api.USERNAME_PASSWOED_LOGIN, params, new ResponseCallBack<User>() {
+                if (!TextUtils.isEmpty(mPhoneNumber.getText()) && !TextUtils.isEmpty(mPassword.getText())) {
+                    final String userName = mPhoneNumber.getText().toString();
+                    final String password = mPassword.getText().toString();
+                    Map<String, String> params = new HashMap<>();
+                    params.put("user", userName);
+                    params.put("password", password);
+                    RequestUtils.sendPostRequest(Api.USERNAME_PASSWOED_LOGIN, params, new ResponseCallBack<User>() {
 
-                    @Override
-                    public void onSuccess(User user) {
-                        super.onSuccess(user);
+                        @Override
+                        public void onSuccess(User user) {
+                            super.onSuccess(user);
 
-                        mUser = user;
-                        mUser.setPhone(userName);
-                        mUser.setPwd(password);
+                            mUser = user;
+                            mUser.setPhone(userName);
+                            mUser.setPwd(password);
 
-                        bindData();
-                    }
+                            bindData();
+                        }
 
-                    @Override
-                    public void onFailure(ServiceException e) {
-                        super.onFailure(e);
-                        Toast.makeText(mContext, e.getMsg(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(ServiceException e) {
+                            super.onFailure(e);
+                            Toast.makeText(mContext, e.getMsg(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    showToast("输入账号密码");
+                }
+
             }
         });
 
@@ -115,6 +131,7 @@ public class GetUserInfoActivity extends BaseActivity {
         mToken.setText(mUser.getToken());
         mPhoneNumber.setText(mUser.getPhone());
         mPassword.setText(mUser.getPwd());
+        uidEdit.setText(mUser.getUnumber());
     }
 
     public static Intent createIntent(Context context) {

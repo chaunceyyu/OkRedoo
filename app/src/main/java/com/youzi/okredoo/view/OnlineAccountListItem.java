@@ -10,10 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.youzi.okredoo.GetUserInfoActivity;
 import com.youzi.okredoo.R;
-import com.youzi.okredoo.adapter.AccountListAdapter;
 import com.youzi.okredoo.adapter.AppBaseAdapter;
+import com.youzi.okredoo.adapter.OnlineAccountListAdapter;
 import com.youzi.okredoo.data.DBManager;
 import com.youzi.okredoo.model.User;
 
@@ -23,10 +22,10 @@ import org.simple.eventbus.EventBus;
  * Created by zhangjiajie on 2017/10/8.
  */
 
-public class AccountListItem extends LinearLayout implements AppBaseAdapter.Binding<User>, View.OnClickListener {
+public class OnlineAccountListItem extends LinearLayout implements AppBaseAdapter.Binding<User>, View.OnClickListener {
 
     private User mUser;
-    private AccountListAdapter mAdapter;
+    private OnlineAccountListAdapter mAdapter;
     private int mPosition;
 
     private TextView username;
@@ -36,16 +35,13 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
     private TextView coin;
     private ImageView photo;
 
-    private Button mEditBtn;
     private Button mDeleteBtn;
-    private Button editInfoBtn;
-    private Button addOnlineBtn;
 
-    public AccountListItem(Context context) {
+    public OnlineAccountListItem(Context context) {
         super(context);
     }
 
-    public AccountListItem(Context context, @Nullable AttributeSet attrs) {
+    public OnlineAccountListItem(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -63,35 +59,21 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
         coin = findViewById(R.id.coin);
         photo = findViewById(R.id.photo);
 
-        mEditBtn = findViewById(R.id.editBtn);
         mDeleteBtn = findViewById(R.id.deleteBtn);
-        editInfoBtn = findViewById(R.id.editInfoBtn);
-        addOnlineBtn = findViewById(R.id.addOnlineBtn);
 
-        mEditBtn.setOnClickListener(this);
         mDeleteBtn.setOnClickListener(this);
-        editInfoBtn.setOnClickListener(this);
-        addOnlineBtn.setOnClickListener(this);
     }
 
     @Override
     public void bind(User data, AppBaseAdapter baseAdapter, int position) {
         mUser = data;
-        mAdapter = (AccountListAdapter) baseAdapter;
+        mAdapter = (OnlineAccountListAdapter) baseAdapter;
         mPosition = position;
 
         bindData();
     }
 
     private void bindData() {
-
-        if (mUser.getOnline() == 1) {
-            addOnlineBtn.setEnabled(false);
-            addOnlineBtn.setText("在线账号");
-        } else {
-            addOnlineBtn.setEnabled(true);
-            addOnlineBtn.setText("加入在线账号");
-        }
 
         username.setText(mUser.getNickName());
         phone.setText(mUser.getPhone());
@@ -110,14 +92,9 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
     @Override
     public void onClick(View view) {
         if (view == mDeleteBtn) {
-            DBManager.getInstance().deleteUser(mUser.getUid());
-            EventBus.getDefault().post(mUser.getUid(), "refresh_user_list");
-        } else if (view == mEditBtn) {
-            getContext().startActivity(GetUserInfoActivity.createIntent(getContext(), mUser.getUid()));
-        } else if (view == addOnlineBtn) {
-            mUser.setOnline(1);
+            mUser.setOnline(0);
             DBManager.getInstance().updateUser(mUser);
-        } else if (view == editInfoBtn) {
+            EventBus.getDefault().post(mUser.getUid(), "refresh_user_list");
         }
     }
 }

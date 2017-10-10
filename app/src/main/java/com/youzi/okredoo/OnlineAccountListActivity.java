@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.youzi.okredoo.adapter.AccountListAdapter;
+import com.youzi.okredoo.adapter.OnlineAccountListAdapter;
 import com.youzi.okredoo.data.UserList;
 
 import org.simple.eventbus.EventBus;
@@ -22,7 +22,7 @@ public class OnlineAccountListActivity extends BaseActivity implements View.OnCl
 
     private Context mContext;
     private ListView mListView;
-    private AccountListAdapter mAdapter;
+    private OnlineAccountListAdapter mAdapter;
     private Button mAddBtn;
 
     @Override
@@ -47,20 +47,16 @@ public class OnlineAccountListActivity extends BaseActivity implements View.OnCl
         loadData();
     }
 
-    @Subscriber(tag = "delete_user")
-    private void deleteUser(String uid) {
-        loadData();
-    }
-
     private void loadData() {
-        UserList users = App.getUserList();
+        UserList users = App.getOnlineUserList();
         if (users != null) {
             mAdapter.changeDataSet(users);
         }
     }
 
     private void initView() {
-        mAdapter = new AccountListAdapter(mContext);
+        findViewById(R.id.topLayout).setVisibility(View.GONE);
+        mAdapter = new OnlineAccountListAdapter(mContext);
 
         mListView = (ListView) findViewById(R.id.listview);
         mListView.setAdapter(mAdapter);

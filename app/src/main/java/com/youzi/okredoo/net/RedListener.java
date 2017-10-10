@@ -62,11 +62,13 @@ public class RedListener {
 
     public void enabled() {
         isEnable = true;
+        mHandler.removeMessages(LOOP_MESSAGE_ENTER);
         start();
     }
 
     public void disabled() {
         isEnable = false;
+        mHandler.removeMessages(LOOP_MESSAGE_ENTER);
         exitAll();
     }
 
@@ -96,7 +98,6 @@ public class RedListener {
     };
 
     private void start() {
-        mHandler.removeMessages(LOOP_MESSAGE_ENTER);
 //        mHandler.removeMessages(LOOP_MESSAGE_EXIT);
         mHandler.sendEmptyMessage(LOOP_MESSAGE_ENTER);
     }
@@ -154,7 +155,6 @@ public class RedListener {
     }
 
     private void exitAll() {
-//        mHandler.removeMessages(LOOP_MESSAGE_ENTER);
 //        mHandler.removeMessages(LOOP_MESSAGE_EXIT);
         mLiveExecutor.execute(new Runnable() {
             @Override

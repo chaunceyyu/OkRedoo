@@ -61,7 +61,4 @@ public class DBManager {
         return user;
     }
 
-    public void updateOnline(User user) {
-        mUserDao.update(user);
-    }
 }

@@ -67,11 +67,6 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
         loadData();
     }
 
-    @Subscriber(tag = "delete_user")
-    private void deleteUser(String uid) {
-        loadData();
-    }
-
     private void loadData() {
         UserList users = App.getUserList();
         mAdapter.changeDataSet(users);
