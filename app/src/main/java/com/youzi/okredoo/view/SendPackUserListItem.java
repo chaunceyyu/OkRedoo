@@ -14,6 +14,7 @@ import com.youzi.okredoo.R;
 import com.youzi.okredoo.SendRedPackActivity;
 import com.youzi.okredoo.adapter.AppBaseAdapter;
 import com.youzi.okredoo.adapter.SendPackUserListAdapter;
+import com.youzi.okredoo.data.DBManager;
 import com.youzi.okredoo.model.User;
 import com.youzi.okredoo.model.response.HongbaosendResponse;
 import com.youzi.okredoo.net.Api;
@@ -114,15 +115,26 @@ public class SendPackUserListItem extends LinearLayout implements AppBaseAdapter
         Map<String, String> params = new HashMap<>();
         params.put("targetid", mActivity.getTargetUser().getUid());
         params.put("conversationType", String.valueOf(Conversation.ConversationType.CHATROOM.getValue()));
-        params.put("amount", mUser.getCoins());
+//        params.put("amount", mUser.getCoins());
+        params.put("amount", "1");
         params.put("count", "1");
         params.put("ext", "恭喜发财");
         params.put("pass", "");
-        RequestUtils.sendPostRequest(Api.SEND_HONGBAO, params, new ResponseCallBack<HongbaosendResponse>() {
+        RequestUtils.sendPostRequest(Api.SEND_HONGBAO, mUser.getUid(), mUser.getToken(), params, new ResponseCallBack<HongbaosendResponse>() {
             @Override
-            public void onSuccess(HongbaosendResponse data) {
-                RedListener.get().redPackROB(data.getRpid(), mActivity.getTargetUser(), String.valueOf(Conversation.ConversationType.CHATROOM
-                        .getValue()), mActivity.getTargetUser().getUid());
+            public void onSuccess(final HongbaosendResponse data) {
+                mActivity.showToast("发送成功，剩余金币" + data.getAmount());
+                mUser.setCoins(data.getAmount());
+                DBManager.getInstance().updateUser(mUser);
+                bindData();
+                sendBtn.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        RedListener.get().redPackROB(data.getRpid(), mActivity.getTargetUser(), String.valueOf(Conversation.ConversationType.CHATROOM
+                                .getValue()), mActivity.getTargetUser().getUid());
+                    }
+                }, 1000);
+
             }
 
 

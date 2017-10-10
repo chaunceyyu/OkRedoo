@@ -4,57 +4,41 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.youzi.okredoo.adapter.AccountListAdapter;
+import com.youzi.okredoo.adapter.SelectUserAdapter;
 import com.youzi.okredoo.data.UserList;
+import com.youzi.okredoo.model.User;
 
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
 
+import static com.youzi.okredoo.R.id.coin;
+
 /**
- * 账号列表界面
+ * 选择用户界面
  */
-public class AccountListActivity extends BaseActivity implements View.OnClickListener {
+public class SelectUserListActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
 
     private Context mContext;
     private ListView mListView;
-    private AccountListAdapter mAdapter;
-    private Button mAddBtn;
-
-    private TextView coin;
+    private SelectUserAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        setContentView(R.layout.account_list_activity);
+        setContentView(R.layout.select_user_activity);
         initView();
         loadData();
 
-        bindData();
         EventBus.getDefault().register(this);
     }
-
-    private void bindData() {
-        coin.setText(String.valueOf(getCoins()));
-    }
-
-    private int getCoins() {
-        UserList users = App.getUserList();
-        if (users.isEmpty()) {
-            return 0;
-        }
-        int coins = 0;
-        for (int i = 0; i < users.size(); i++) {
-            coins += Integer.valueOf(users.get(i).getCoins());
-        }
-        return coins;
-    }
-
 
     @Override
     protected void onDestroy() {
@@ -70,29 +54,31 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
     private void loadData() {
         UserList users = App.getUserList();
         mAdapter.changeDataSet(users);
-        bindData();
     }
 
     private void initView() {
-        mAdapter = new AccountListAdapter(mContext);
+        mAdapter = new SelectUserAdapter(mContext);
 
         mListView = (ListView) findViewById(R.id.listview);
         mListView.setAdapter(mAdapter);
-
-        mAddBtn = (Button) findViewById(R.id.addBtn);
-        coin = (TextView) findViewById(R.id.coin);
-        mAddBtn.setOnClickListener(this);
+        mListView.setOnItemClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        if (view == mAddBtn) {
-            startActivity(GetUserInfoActivity.createIntent(mContext));
-        }
     }
 
     public static Intent createIntent(Context context) {
-        Intent intent = new Intent(context, AccountListActivity.class);
+        Intent intent = new Intent(context, SelectUserListActivity.class);
         return intent;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        String uid = mAdapter.getDataList().get(i).getUid();
+        Intent data = new Intent();
+        data.putExtra("uid", uid);
+        setResult(RESULT_OK, data);
+        finish();
     }
 }
