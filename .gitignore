@@ -7,3 +7,7 @@
 /build
 /captures
 .externalNativeBuild
+.idea
+IMLib/build
+PicturePicker/build
+UCrop/build
