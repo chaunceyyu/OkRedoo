@@ -281,7 +281,7 @@ public class RedListener {
                 postMessageTxt("REDPACK_ROB onSuccess:" + new Gson().toJson(data));
                 getRedInfo(rpid, user);
 
-                saveGetRedPack(new GetRedPack(user.getUid(), rpid, data.count, System.currentTimeMillis()));
+                saveGetRedPack(new GetRedPack(user.getUid(), rpid, Integer.valueOf(data.count), System.currentTimeMillis()));
 
             }
 
@@ -295,6 +295,7 @@ public class RedListener {
                     public void onSuccess(RedPackInfo data) {
                         Log.w(TAG, "redPackReciveState onSuccess:" + new Gson().toJson(data));
                         postMessageTxt("redPackReciveState onSuccess:" + new Gson().toJson(data));
+                        DBManager.getInstance().saveRedPack(data);
                     }
 
                     @Override

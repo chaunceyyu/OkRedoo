@@ -11,21 +11,19 @@ public class GetRedPack {
 
     private String uid;
     private String rpid;
-    private String count;
+    private int count;
     private long time;
 
     public GetRedPack() {
     }
 
-
-    @Generated(hash = 223019801)
-    public GetRedPack(String uid, String rpid, String count, long time) {
+    @Generated(hash = 447395026)
+    public GetRedPack(String uid, String rpid, int count, long time) {
         this.uid = uid;
         this.rpid = rpid;
         this.count = count;
         this.time = time;
     }
-
 
     public String getUid() {
         return uid;
@@ -33,14 +31,6 @@ public class GetRedPack {
 
     public void setUid(String uid) {
         this.uid = uid;
-    }
-
-    public String getCount() {
-        return count;
-    }
-
-    public void setCount(String count) {
-        this.count = count;
     }
 
     public String getRpid() {
@@ -59,5 +49,13 @@ public class GetRedPack {
 
     public long getTime() {
         return this.time;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

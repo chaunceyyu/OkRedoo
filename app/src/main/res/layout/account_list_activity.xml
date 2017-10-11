@@ -54,11 +54,20 @@
                   android:textColor="@color/black80"
                   android:textSize="14dp"/>
 
+        <Button android:id="@+id/activeBtn"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_toLeftOf="@+id/importBtn"
+                android:text="激活"
+                android:textSize="12dp"/>
+
         <Button android:id="@+id/importBtn"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="2dp"
                 android:layout_toLeftOf="@+id/addBtn"
                 android:text="导入"
                 android:textSize="12dp"/>

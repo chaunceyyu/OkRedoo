@@ -3,6 +3,8 @@ package com.youzi.okredoo.util;
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.WallpaperManager;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -39,6 +41,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static android.content.Context.CLIPBOARD_SERVICE;
 
 /**
  * @author 作者 张嘉杰 E-mail：jackzjj@qq.com
@@ -155,6 +159,19 @@ public class AppUtil {
             default:
                 return NETWORK_CLASS_UNKNOWN;
         }
+    }
+
+    /**
+     *
+     * @param context
+     * @param content
+     */
+    public static void copyToClipboard(Context context, String content) {
+        //创建一个新的文本clip对象
+        ClipData clipData = ClipData.newPlainText("content", content);
+        //把clip对象放在剪贴板中
+        ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
+        clipboardManager.setPrimaryClip(clipData);
     }
 
     /**

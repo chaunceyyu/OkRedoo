@@ -24,6 +24,7 @@ import com.youzi.okredoo.net.Api;
 import com.youzi.okredoo.net.RequestUtils;
 import com.youzi.okredoo.net.ResponseCallBack;
 import com.youzi.okredoo.net.ServiceException;
+import com.youzi.okredoo.util.AppUtil;
 
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
@@ -42,6 +43,7 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
     private AccountListAdapter mAdapter;
     private Button mAddBtn;
     private Button importBtn;
+    private Button activeBtn;
 
     private TextView coin;
     private TextView userCount;
@@ -103,7 +105,16 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
         mAdapter.changeDataSet(users);
         bindData();
 
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < users.size(); i++) {
 
+            User u = users.get(i);
+            stringBuilder.append(u.getPhone()).append(":").append(u.getPwd());
+            if (i != users.size() - 1) {
+                stringBuilder.append(",");
+            }
+        }
+        AppUtil.copyToClipboard(mContext, stringBuilder.toString());
     }
 
     private void getTokenState() {
@@ -136,10 +147,13 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
 
         mAddBtn = (Button) findViewById(R.id.addBtn);
         importBtn = (Button) findViewById(R.id.importBtn);
+        activeBtn = (Button) findViewById(R.id.activeBtn);
+
         coin = (TextView) findViewById(R.id.coin);
         userCount = (TextView) findViewById(R.id.userCount);
         mAddBtn.setOnClickListener(this);
         importBtn.setOnClickListener(this);
+        activeBtn.setOnClickListener(this);
     }
 
     @Override
@@ -148,6 +162,13 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
             startActivity(GetUserInfoActivity.createIntent(mContext));
         } else if (view == importBtn) {
             showImportDialog();
+        } else if (view == activeBtn) {
+            for (int i = 0; i < mAdapter.getDataList().size(); i++) {
+                User u = mAdapter.getDataList().get(i);
+                u.setOnline(1);
+                DBManager.getInstance().updateUser(u);
+            }
+            mAdapter.notifyDataSetChanged();
         }
     }
 
@@ -183,7 +204,7 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void saveUserList(String s) {
-
+//        showProgress("导入", "账号导入中...");
         try {
             String[] account = s.split(",");
             for (int i = 0; i < account.length; i++) {
@@ -202,7 +223,6 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void getUser(final String phone, final String password) {
-        showProgress("导入", "账号导入中...");
         Map<String, String> params = new HashMap<>();
         params.put("user", phone);
         params.put("password", password);
@@ -219,10 +239,8 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
                     DBManager.getInstance().saveUser(user);
                 }
 
-                closeProgress();
-
                 mHandler.removeCallbacks(loadRunnable);
-                mHandler.postDelayed(loadRunnable, 2000);
+                mHandler.postDelayed(loadRunnable, 1000);
 
             }
 
@@ -230,7 +248,6 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
             public void onFailure(ServiceException e) {
                 super.onFailure(e);
                 showToast(e.getMsg());
-                closeProgress();
             }
         });
     }
