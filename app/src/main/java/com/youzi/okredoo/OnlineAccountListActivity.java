@@ -27,6 +27,7 @@ public class OnlineAccountListActivity extends BaseActivity implements View.OnCl
     private Button mAddBtn;
 
     private TextView coin;
+    private TextView userCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +36,17 @@ public class OnlineAccountListActivity extends BaseActivity implements View.OnCl
         setContentView(R.layout.online_account_list_activity);
         initView();
         loadData();
-        bindData();
+
         EventBus.getDefault().register(this);
     }
 
     private void bindData() {
         coin.setText(String.valueOf(getCoins()));
+        userCount.setText("账号 " + mAdapter.getCount());
     }
 
     private int getCoins() {
-        UserList users = App.getUserList();
+        UserList users = App.getOnlineUserList();
         if (users.isEmpty()) {
             return 0;
         }
@@ -71,6 +73,7 @@ public class OnlineAccountListActivity extends BaseActivity implements View.OnCl
         if (users != null) {
             mAdapter.changeDataSet(users);
         }
+        bindData();
     }
 
     private void initView() {
@@ -79,6 +82,7 @@ public class OnlineAccountListActivity extends BaseActivity implements View.OnCl
         mListView = (ListView) findViewById(R.id.listview);
         mListView.setAdapter(mAdapter);
         coin = (TextView) findViewById(R.id.coin);
+        userCount = (TextView) findViewById(R.id.userCount);
         mAddBtn = (Button) findViewById(R.id.addBtn);
 
     }

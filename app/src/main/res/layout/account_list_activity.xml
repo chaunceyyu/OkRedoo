@@ -9,11 +9,13 @@
     tools:context="com.youzi.okredoo.AccountListActivity">
 
     <RelativeLayout
-        android:id="@+id/topLayout" android:layout_width="match_parent"
+        android:id="@+id/topLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/coinLayout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
@@ -28,7 +30,7 @@
                       android:layout_height="wrap_content"
                       android:lines="1"
                       android:text="总金币 "
-                      android:textColor="@color/black65"
+                      android:textColor="@color/black80"
                       android:textSize="14dp"/>
 
             <TextView android:id="@+id/coin"
@@ -41,6 +43,16 @@
                       android:textSize="16dp"
                       android:textStyle="bold"/>
         </LinearLayout>
+
+        <TextView android:id="@+id/userCount"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerVertical="true"
+                  android:layout_marginLeft="5dp"
+                  android:layout_toRightOf="@+id/coinLayout"
+                  android:text="账号 0"
+                  android:textColor="@color/black80"
+                  android:textSize="14dp"/>
 
         <Button android:id="@+id/addBtn"
                 android:layout_width="wrap_content"

@@ -69,8 +69,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private ArrayList<String> dataList = new ArrayList<>();
 
     Handler handler = new Handler();
-    private int minMs = 900;
-    private int maxMs = 1400;
+    private int minMs = 1200;
+    private int maxMs = 1800;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,8 +87,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         coin.setText(String.valueOf(getCoins()));
         handler.postDelayed(timerRunnable, 60 * 1000);
 
-        minMs = App.getSP().getInt("minMs", 900);
-        maxMs = App.getSP().getInt("maxMs", 1400);
+        minMs = App.getSP().getInt("minMs", 1200);
+        maxMs = App.getSP().getInt("maxMs", 1800);
 
         RedListener.get().setMinDelay(minMs);
         RedListener.get().setMaxDelay(maxMs);
@@ -433,8 +433,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     public void showSpeedMenu() {
-        String[] textArray = new String[]{"600-1100ms", "700-1200ms", "800-1300ms", "900-1400ms(Default)", "1000-1500ms", "1100-1600ms",
-                "1200-1700ms", "1300-1800ms", "1500-2000ms"};
+        String[] textArray = new String[]{"600-1200ms", "800-1400ms", "1000-1600ms", "1200-1800ms(Default)", "1400-2000ms", "1600-2200ms",
+                "1800-2400ms", "2000-2600ms", "2200-2800ms"};
 
         new MenuDialog(mContext).setMenuText(textArray)
                 .setOnItemClickListener(new MenuDialog.OnItemClickListener() {
@@ -443,40 +443,40 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                         switch (index) {
                             case 0:
                                 minMs = 600;
-                                maxMs = 1100;
+                                maxMs = 1200;
 
                                 break;
                             case 1:
-                                minMs = 700;
-                                maxMs = 1200;
-                                break;
-                            case 2:
                                 minMs = 800;
-                                maxMs = 1300;
-                                break;
-                            case 3:
-                                minMs = 900;
                                 maxMs = 1400;
                                 break;
-                            case 4:
+                            case 2:
                                 minMs = 1000;
-                                maxMs = 1500;
-                                break;
-                            case 5:
-                                minMs = 1100;
                                 maxMs = 1600;
                                 break;
-                            case 6:
+                            case 3:
                                 minMs = 1200;
-                                maxMs = 1700;
-                                break;
-                            case 7:
-                                minMs = 1300;
                                 maxMs = 1800;
                                 break;
-                            case 8:
-                                minMs = 1500;
+                            case 4:
+                                minMs = 1400;
                                 maxMs = 2000;
+                                break;
+                            case 5:
+                                minMs = 1600;
+                                maxMs = 2200;
+                                break;
+                            case 6:
+                                minMs = 1800;
+                                maxMs = 2400;
+                                break;
+                            case 7:
+                                minMs = 2000;
+                                maxMs = 2600;
+                                break;
+                            case 8:
+                                minMs = 2200;
+                                maxMs = 2800;
                                 break;
 
 

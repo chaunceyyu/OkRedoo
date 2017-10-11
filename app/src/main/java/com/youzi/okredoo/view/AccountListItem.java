@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.youzi.okredoo.AccountListActivity;
+import com.youzi.okredoo.GetMoneyActivity;
 import com.youzi.okredoo.GetUserInfoActivity;
 import com.youzi.okredoo.R;
 import com.youzi.okredoo.UserInfoEditActivity;
@@ -35,12 +37,18 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
     private TextView idCode;
     private TextView token;
     private TextView coin;
+
+    private TextView tokenState;
+
     private ImageView photo;
 
     private Button mEditBtn;
     private Button mDeleteBtn;
     private Button editInfoBtn;
     private Button addOnlineBtn;
+    private Button tixianBtn;
+
+    private AccountListActivity mActivity;
 
     public AccountListItem(Context context) {
         super(context);
@@ -63,16 +71,19 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
         token = findViewById(R.id.token);
         coin = findViewById(R.id.coin);
         photo = findViewById(R.id.photo);
+        tokenState = findViewById(R.id.tokenState);
 
         mEditBtn = findViewById(R.id.editBtn);
         mDeleteBtn = findViewById(R.id.deleteBtn);
         editInfoBtn = findViewById(R.id.editInfoBtn);
         addOnlineBtn = findViewById(R.id.addOnlineBtn);
+        tixianBtn = findViewById(R.id.tixianBtn);
 
         mEditBtn.setOnClickListener(this);
         mDeleteBtn.setOnClickListener(this);
         editInfoBtn.setOnClickListener(this);
         addOnlineBtn.setOnClickListener(this);
+        tixianBtn.setOnClickListener(this);
     }
 
     @Override
@@ -80,6 +91,7 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
         mUser = data;
         mAdapter = (AccountListAdapter) baseAdapter;
         mPosition = position;
+        mActivity = (AccountListActivity) getContext();
 
         bindData();
     }
@@ -92,6 +104,20 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
         } else {
             addOnlineBtn.setEnabled(true);
             addOnlineBtn.setText("加入在线账号");
+        }
+
+        Integer state = mActivity.getTokenStateMap().get(mUser.getUid());
+        if (state == null) {
+            tokenState.setVisibility(INVISIBLE);
+        } else {
+            tokenState.setVisibility(VISIBLE);
+            if (state == 1) {
+                tokenState.setText("(生效)");
+                tokenState.setTextColor(getResources().getColor(R.color.green_weixin));
+            } else {
+                tokenState.setText("(失效)");
+                tokenState.setTextColor(getResources().getColor(R.color.red_weixing));
+            }
         }
 
         username.setText(mUser.getNickName());
@@ -121,6 +147,8 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
             bindData();
         } else if (view == editInfoBtn) {
             getContext().startActivity(UserInfoEditActivity.createIntent(getContext(), mUser.getUid()));
+        } else if (view == tixianBtn) {
+            getContext().startActivity(GetMoneyActivity.createIntent(getContext(), mUser.getUid()));
         }
     }
 }

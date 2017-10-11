@@ -35,6 +35,8 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".SelectUserListActivity"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".GetMoneyActivity"
+                  android:screenOrientation="portrait"/>
 
     </application>
 

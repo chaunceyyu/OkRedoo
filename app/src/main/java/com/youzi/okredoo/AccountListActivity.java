@@ -10,9 +10,18 @@ import android.widget.TextView;
 
 import com.youzi.okredoo.adapter.AccountListAdapter;
 import com.youzi.okredoo.data.UserList;
+import com.youzi.okredoo.model.User;
+import com.youzi.okredoo.model.User2;
+import com.youzi.okredoo.net.Api;
+import com.youzi.okredoo.net.RequestUtils;
+import com.youzi.okredoo.net.ResponseCallBack;
+import com.youzi.okredoo.net.ServiceException;
 
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 账号列表界面
@@ -26,6 +35,13 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
     private Button mAddBtn;
 
     private TextView coin;
+    private TextView userCount;
+
+    private HashMap<String, Integer> tokenStateMap = new HashMap<>();
+
+    public HashMap<String, Integer> getTokenStateMap() {
+        return tokenStateMap;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +52,15 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
         loadData();
 
         bindData();
+
+        getTokenState();
+
         EventBus.getDefault().register(this);
     }
 
     private void bindData() {
         coin.setText(String.valueOf(getCoins()));
+        userCount.setText("账号 " + mAdapter.getCount());
     }
 
     private int getCoins() {
@@ -71,6 +91,30 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
         UserList users = App.getUserList();
         mAdapter.changeDataSet(users);
         bindData();
+
+
+    }
+
+    private void getTokenState() {
+        UserList users = mAdapter.getDataList();
+        for (int i = 0; i < users.size(); i++) {
+            final User user = users.get(i);
+            Map<String, String> params = new HashMap<>();
+            RequestUtils.sendPostRequest(Api.GETUSERINFO, user.getUid(), user.getToken(), params, new ResponseCallBack<User2>() {
+                @Override
+                public void onSuccess(User2 u) {
+                    tokenStateMap.put(user.getUid(), 1);
+                    mAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onFailure(ServiceException e) {
+                    super.onFailure(e);
+                    tokenStateMap.put(user.getUid(), 0);
+                    mAdapter.notifyDataSetChanged();
+                }
+            });
+        }
     }
 
     private void initView() {
@@ -81,6 +125,7 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
 
         mAddBtn = (Button) findViewById(R.id.addBtn);
         coin = (TextView) findViewById(R.id.coin);
+        userCount = (TextView) findViewById(R.id.userCount);
         mAddBtn.setOnClickListener(this);
     }
 
