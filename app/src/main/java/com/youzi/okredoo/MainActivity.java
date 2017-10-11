@@ -258,9 +258,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void refreshUserListInfo() {
-        UserList users = App.getUserList();
+        UserList users = App.getOnlineUserList();
         if (users.isEmpty()) {
-            showToast("无用户数据");
+            showToast("无在线账号数据");
             return;
         }
 

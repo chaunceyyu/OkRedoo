@@ -5,21 +5,14 @@
               android:orientation="vertical"
               android:padding="10dp">
 
-    <EditText android:id="@+id/uid"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_alignParentLeft="true"
-              android:layout_centerVertical="true"
-              android:hint="UID"
-              android:textSize="16dp"/>
-
     <EditText android:id="@+id/username"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_alignParentLeft="true"
               android:layout_centerVertical="true"
               android:hint="Username"
-              android:textSize="16dp"/>
+              android:textSize="16dp"
+              android:visibility="gone"/>
 
     <EditText android:id="@+id/phone"
               android:layout_width="match_parent"
@@ -39,6 +32,20 @@
               android:lines="1"
               android:textSize="16dp"/>
 
+    <View android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:layout_marginBottom="10dp"
+          android:layout_marginTop="10dp"
+          android:background="@color/split_color"/>
+
+    <EditText android:id="@+id/uid"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:layout_centerVertical="true"
+              android:hint="UID"
+              android:textSize="16dp"/>
+
     <EditText android:id="@+id/token"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -50,13 +57,13 @@
     <Button android:id="@+id/getTokenBtn"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:text="获取用户信息"
+            android:text="登录"
             android:textSize="14dp"/>
 
-    <Button android:id="@+id/saveBtn"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:text="保存"
-            android:textSize="14dp"/>
+    <!--<Button android:id="@+id/saveBtn"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="45dp"-->
+            <!--android:text="保存"-->
+            <!--android:textSize="14dp"/>-->
 
 </LinearLayout>

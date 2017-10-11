@@ -71,6 +71,11 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
         EventBus.getDefault().register(this);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     private void bindData() {
         coin.setText(String.valueOf(getCoins()));
         userCount.setText("账号 " + mAdapter.getCount());
@@ -114,7 +119,7 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
                 stringBuilder.append(",");
             }
         }
-        AppUtil.copyToClipboard(mContext, stringBuilder.toString());
+//        AppUtil.copyToClipboard(mContext, stringBuilder.toString());
     }
 
     private void getTokenState() {
@@ -159,7 +164,7 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         if (view == mAddBtn) {
-            startActivity(GetUserInfoActivity.createIntent(mContext));
+            startActivity(UserLoginActivity.createIntent(mContext));
         } else if (view == importBtn) {
             showImportDialog();
         } else if (view == activeBtn) {

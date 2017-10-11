@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".GetUserInfoActivity"
+        <activity android:name=".UserLoginActivity"
                   android:screenOrientation="portrait"/>
 
         <activity android:name=".AccountListActivity"

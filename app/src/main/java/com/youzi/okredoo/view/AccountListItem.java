@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youzi.okredoo.AccountListActivity;
 import com.youzi.okredoo.GetMoneyActivity;
-import com.youzi.okredoo.GetUserInfoActivity;
+import com.youzi.okredoo.UserLoginActivity;
 import com.youzi.okredoo.R;
 import com.youzi.okredoo.UserInfoEditActivity;
 import com.youzi.okredoo.adapter.AccountListAdapter;
@@ -140,7 +140,12 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
             DBManager.getInstance().deleteUser(mUser.getUid());
             EventBus.getDefault().post(mUser.getUid(), "refresh_user_list");
         } else if (view == mEditBtn) {
-            getContext().startActivity(GetUserInfoActivity.createIntent(getContext(), mUser.getUid()));
+            if (mUser.getPhone() != null && mUser.getPwd() != null) {
+                getContext().startActivity(UserLoginActivity.createIntentForPhone(getContext(), mUser.getPhone(), mUser.getPwd()));
+            } else {
+                getContext().startActivity(UserLoginActivity.createIntentForUid(getContext(), mUser.getUid(), mUser.getToken()));
+            }
+
         } else if (view == addOnlineBtn) {
             mUser.setOnline(1);
             DBManager.getInstance().updateUser(mUser);

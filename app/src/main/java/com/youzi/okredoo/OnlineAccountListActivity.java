@@ -90,7 +90,7 @@ public class OnlineAccountListActivity extends BaseActivity implements View.OnCl
     @Override
     public void onClick(View view) {
         if (view == mAddBtn) {
-            startActivity(GetUserInfoActivity.createIntent(mContext));
+            startActivity(UserLoginActivity.createIntent(mContext));
         }
     }
 
