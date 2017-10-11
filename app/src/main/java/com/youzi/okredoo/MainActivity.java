@@ -226,7 +226,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         } else if (view == tongjiBtn) {
             startActivity(StatisticsActivity.createIntent(mContext));
         } else if (view == sendCoinBtn) {
-            startActivity(SendRedPackActivity.createIntent(mContext));
+            startActivity(SendCoinActivity.createIntent(mContext));
         }
     }
 

@@ -32,4 +32,9 @@
         <item name="android:paddingRight">12dp</item>
         <item name="android:gravity">center</item>
     </style>
+
+    <style name="Animations_BottomPush">
+        <item name="android:windowEnterAnimation">@anim/pw_push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/pw_push_bottom_out</item>
+    </style>
 </resources>

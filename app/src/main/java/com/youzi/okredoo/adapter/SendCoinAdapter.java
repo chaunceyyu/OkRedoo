@@ -11,15 +11,15 @@ import com.youzi.okredoo.data.UserList;
 /**
  * @author jack
  */
-public class SendPackUserListAdapter extends AppBaseAdapter<UserList> {
+public class SendCoinAdapter extends AppBaseAdapter<UserList> {
 
-    public SendPackUserListAdapter(Context context) {
+    public SendCoinAdapter(Context context) {
         super(context);
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.send_pack_user_list_item;
+        return R.layout.send_coin_item;
     }
 
 }

@@ -31,11 +31,13 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".StatisticsActivity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".SendRedPackActivity"
+        <activity android:name=".SendCoinActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".SelectUserListActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".GetMoneyActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".SendGiftActivity"
                   android:screenOrientation="portrait"/>
 
     </application>

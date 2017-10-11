@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.youzi.okredoo.adapter.SendPackUserListAdapter;
+import com.youzi.okredoo.adapter.SendCoinAdapter;
 import com.youzi.okredoo.data.DBManager;
 import com.youzi.okredoo.data.UserList;
 import com.youzi.okredoo.model.User;
@@ -31,13 +31,13 @@ import java.util.Map;
  * Created by zhangjiajie on 2017/10/10.
  */
 
-public class SendRedPackActivity extends BaseActivity implements View.OnClickListener {
+public class SendCoinActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView name;
     private TextView coin;
 
     private ListView mListView;
-    private SendPackUserListAdapter mAdapter;
+    private SendCoinAdapter mAdapter;
 
     private User mTargetUser;
 
@@ -47,7 +47,7 @@ public class SendRedPackActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.send_pack_activity);
+        setContentView(R.layout.send_coin_activity);
         initView();
         loadData();
 
@@ -89,7 +89,7 @@ public class SendRedPackActivity extends BaseActivity implements View.OnClickLis
         coin = (TextView) findViewById(R.id.coin);
         selectBtn = (Button) findViewById(R.id.selectBtn);
         photo = (ImageView) findViewById(R.id.photo);
-        mAdapter = new SendPackUserListAdapter(mContext);
+        mAdapter = new SendCoinAdapter(mContext);
         mListView.setAdapter(mAdapter);
 
         selectBtn.setOnClickListener(this);
@@ -111,7 +111,7 @@ public class SendRedPackActivity extends BaseActivity implements View.OnClickLis
 
 
     public static Intent createIntent(Context context) {
-        Intent intent = new Intent(context, SendRedPackActivity.class);
+        Intent intent = new Intent(context, SendCoinActivity.class);
         return intent;
     }
 

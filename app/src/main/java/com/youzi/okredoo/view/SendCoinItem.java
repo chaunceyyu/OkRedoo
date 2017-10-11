@@ -13,9 +13,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.youzi.okredoo.R;
-import com.youzi.okredoo.SendRedPackActivity;
+import com.youzi.okredoo.SendCoinActivity;
 import com.youzi.okredoo.adapter.AppBaseAdapter;
-import com.youzi.okredoo.adapter.SendPackUserListAdapter;
+import com.youzi.okredoo.adapter.SendCoinAdapter;
 import com.youzi.okredoo.data.DBManager;
 import com.youzi.okredoo.model.RedPackInfo;
 import com.youzi.okredoo.model.User;
@@ -40,10 +40,10 @@ import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
  * Created by zhangjiajie on 2017/10/8.
  */
 
-public class SendPackUserListItem extends LinearLayout implements AppBaseAdapter.Binding<User>, View.OnClickListener {
+public class SendCoinItem extends LinearLayout implements AppBaseAdapter.Binding<User>, View.OnClickListener {
 
     private User mUser;
-    private SendPackUserListAdapter mAdapter;
+    private SendCoinAdapter mAdapter;
     private int mPosition;
 
     private TextView username;
@@ -55,13 +55,13 @@ public class SendPackUserListItem extends LinearLayout implements AppBaseAdapter
 
     private Button sendBtn;
 
-    private SendRedPackActivity mActivity;
+    private SendCoinActivity mActivity;
 
-    public SendPackUserListItem(Context context) {
+    public SendCoinItem(Context context) {
         super(context);
     }
 
-    public SendPackUserListItem(Context context, @Nullable AttributeSet attrs) {
+    public SendCoinItem(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -86,9 +86,9 @@ public class SendPackUserListItem extends LinearLayout implements AppBaseAdapter
     @Override
     public void bind(User data, AppBaseAdapter baseAdapter, int position) {
         mUser = data;
-        mAdapter = (SendPackUserListAdapter) baseAdapter;
+        mAdapter = (SendCoinAdapter) baseAdapter;
         mPosition = position;
-        mActivity = (SendRedPackActivity) getContext();
+        mActivity = (SendCoinActivity) getContext();
         bindData();
     }
 
@@ -141,7 +141,7 @@ public class SendPackUserListItem extends LinearLayout implements AppBaseAdapter
         RequestUtils.sendPostRequest(Api.SEND_HONGBAO, mUser.getUid(), mUser.getToken(), params, new ResponseCallBack<HongbaosendResponse>() {
             @Override
             public void onSuccess(final HongbaosendResponse data) {
-                mActivity.showToast("发送成功，剩余金币 " + data.getAmount());
+                mActivity.showToast("发送金币成功");
                 mUser.setCoins(data.getAmount());
                 DBManager.getInstance().updateUser(mUser);
                 bindData();
