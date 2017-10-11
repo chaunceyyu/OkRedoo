@@ -63,19 +63,29 @@ public class GetUserInfoActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 if (!TextUtils.isEmpty(uidEdit.getText()) && !TextUtils.isEmpty(mToken.getText())) {
-                    if (mUser == null) {
-                        mUser = new User();
-                        mUser.setUid(uidEdit.getText().toString());
-                        mUser.setToken(mToken.getText().toString());
-                    }
-                    if (uid == null) {
-                        DBManager.getInstance().saveUser(mUser);
-                    } else {
-                        DBManager.getInstance().updateUser(mUser);
-                    }
-                    showToast("保存成功");
-                    EventBus.getDefault().post("", "refresh_user_list");
-                    finish();
+                    Map<String, String> params = new HashMap<>();
+                    RequestUtils.sendPostRequest(Api.GETUSERINFO, uidEdit.getText().toString(), mToken.getText().toString(), params, new
+                            ResponseCallBack<User>() {
+                                @Override
+                                public void onSuccess(User u) {
+                                    if (DBManager.getInstance().isExistUser(u.getUid())) {
+                                        DBManager.getInstance().updateUser(u);
+                                    } else {
+                                        DBManager.getInstance().saveUser(u);
+                                    }
+
+                                    showToast("保存成功");
+                                    EventBus.getDefault().post("", "refresh_user_list");
+                                    finish();
+                                }
+
+                                @Override
+                                public void onFailure(ServiceException e) {
+                                    super.onFailure(e);
+                                    showToast(e.getMsg());
+                                }
+                            });
+
                 } else {
                     showToast("token无效");
                 }

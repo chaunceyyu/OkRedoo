@@ -145,7 +145,7 @@ public class UserInfoEditActivity extends BaseActivity implements View.OnClickLi
         etSign.setSelection(etSign.length());
         tvId.setText(user.getUnumber());
         tvBirthday.setText(user.getBirthday());
-        tvSex.setText(user.getSex().equals("0") ? "女" : "男");
+        tvSex.setText("0".equals(user.getSex()) ? "女" : "男");
 
         etSign.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
