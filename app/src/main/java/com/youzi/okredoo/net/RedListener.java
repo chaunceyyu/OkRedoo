@@ -6,7 +6,9 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.youzi.okredoo.App;
+import com.youzi.okredoo.data.DBManager;
 import com.youzi.okredoo.data.UserList;
+import com.youzi.okredoo.model.GetRedPack;
 import com.youzi.okredoo.model.Live;
 import com.youzi.okredoo.model.RedPackInfo;
 import com.youzi.okredoo.model.User;
@@ -277,9 +279,14 @@ public class RedListener {
                 super.onSuccess(data);
                 Log.w(TAG, "REDPACK_ROB onSuccess:" + new Gson().toJson(data));
                 postMessageTxt("REDPACK_ROB onSuccess:" + new Gson().toJson(data));
-                EventBus.getDefault().post("", "refreshTargetUser");
                 getRedInfo(rpid, user);
 
+                saveGetRedPack(new GetRedPack(user.getUid(), rpid, data.count, System.currentTimeMillis()));
+
+            }
+
+            private void saveGetRedPack(GetRedPack getRedPack) {
+                DBManager.getInstance().saveUserGetRedPack(getRedPack);
             }
 
             private void getRedInfo(String rpid, User user) {
@@ -441,7 +448,7 @@ public class RedListener {
     }
 
     public void redPackReciveState(String rpid, User user, final ApiCallback<RedPackInfo> apiCallback) {
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("rpid", rpid);
         RequestUtils.sendPostRequest(Api.RED_PACK_INFO, user.getUid(), user.getToken(), params, new ResponseCallBack<RedPackInfo>() {
             @Override

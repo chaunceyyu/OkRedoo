@@ -1,10 +1,10 @@
 package com.youzi.okredoo.model;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 
 import java.io.Serializable;
-import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
 public class RedPackInfo implements Serializable {
@@ -35,12 +35,14 @@ public class RedPackInfo implements Serializable {
     private String type;
     private String coin;
 
+    private long time;
 
-    @Generated(hash = 1554347351)
+
+    @Generated(hash = 1128167638)
     public RedPackInfo(String costTime, String count, String info,
             String myRecevie, String myReciveCount, String receive, String rpid,
             String sendName, String sendPhoto, String sendUid, String type,
-            String coin) {
+            String coin, long time) {
         this.costTime = costTime;
         this.count = count;
         this.info = info;
@@ -53,6 +55,7 @@ public class RedPackInfo implements Serializable {
         this.sendUid = sendUid;
         this.type = type;
         this.coin = coin;
+        this.time = time;
     }
 
     @Generated(hash = 639977368)
@@ -154,5 +157,13 @@ public class RedPackInfo implements Serializable {
 
     public void setCoin(String coin) {
         this.coin = coin;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 }

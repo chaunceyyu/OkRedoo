@@ -3,6 +3,7 @@ package com.youzi.okredoo.view;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,23 +11,30 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.youzi.okredoo.R;
 import com.youzi.okredoo.SendRedPackActivity;
 import com.youzi.okredoo.adapter.AppBaseAdapter;
 import com.youzi.okredoo.adapter.SendPackUserListAdapter;
 import com.youzi.okredoo.data.DBManager;
+import com.youzi.okredoo.model.RedPackInfo;
 import com.youzi.okredoo.model.User;
+import com.youzi.okredoo.model.response.Chairesponse;
 import com.youzi.okredoo.model.response.HongbaosendResponse;
 import com.youzi.okredoo.net.Api;
-import com.youzi.okredoo.net.RedListener;
+import com.youzi.okredoo.net.ApiCallback;
 import com.youzi.okredoo.net.RequestUtils;
 import com.youzi.okredoo.net.ResponseCallBack;
 import com.youzi.okredoo.net.ServiceException;
+
+import org.simple.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import io.rong.imlib.model.Conversation;
+
+import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 /**
  * Created by zhangjiajie on 2017/10/8.
@@ -92,6 +100,13 @@ public class SendPackUserListItem extends LinearLayout implements AppBaseAdapter
         token.setText(mUser.getToken());
         coin.setText(mUser.getCoins());
 
+        if (mActivity.getTargetUser() != null &&
+                mActivity.getTargetUser().getUid().equals(mUser.getUid())) {
+            sendBtn.setEnabled(false);
+        } else {
+            sendBtn.setEnabled(true);
+        }
+
         Glide.with(getContext()).load(mUser.getPhoto()).into(photo);
     }
 
@@ -126,14 +141,14 @@ public class SendPackUserListItem extends LinearLayout implements AppBaseAdapter
         RequestUtils.sendPostRequest(Api.SEND_HONGBAO, mUser.getUid(), mUser.getToken(), params, new ResponseCallBack<HongbaosendResponse>() {
             @Override
             public void onSuccess(final HongbaosendResponse data) {
-                mActivity.showToast("发送成功，剩余金币" + data.getAmount());
+                mActivity.showToast("发送成功，剩余金币 " + data.getAmount());
                 mUser.setCoins(data.getAmount());
                 DBManager.getInstance().updateUser(mUser);
                 bindData();
                 sendBtn.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        RedListener.get().redPackROB(data.getRpid(), mActivity.getTargetUser(), String.valueOf(Conversation.ConversationType.CHATROOM
+                        redPackROB(data.getRpid(), mActivity.getTargetUser(), String.valueOf(Conversation.ConversationType.CHATROOM
                                 .getValue()), mActivity.getTargetUser().getUid());
                     }
                 }, 1000);
@@ -145,6 +160,63 @@ public class SendPackUserListItem extends LinearLayout implements AppBaseAdapter
             public void onFailure(ServiceException e) {
                 super.onFailure(e);
                 mActivity.showToast(e.getMsg());
+            }
+        });
+    }
+
+    public void redPackROB(final String rpid, final User user, String type, String targetId) {
+        Map<String, String> params = new HashMap<>();
+        params.put("rpid", rpid);
+        params.put("conversationType", type);
+        params.put("pass", "");
+        params.put("targetid", targetId);
+
+        RequestUtils.sendPostRequest(Api.REDPACK_ROB, user.getUid(), user.getToken(), params, new ResponseCallBack<Chairesponse>() {
+            @Override
+            public void onSuccess(Chairesponse data) {
+                super.onSuccess(data);
+                EventBus.getDefault().post("", "refreshTargetUser");
+                getRedInfo(rpid, user);
+
+            }
+
+            @Override
+            public void onFailure(ServiceException e) {
+                super.onFailure(e);
+                mActivity.showToast(e.getMsg());
+            }
+
+            private void getRedInfo(String rpid, User user) {
+                redPackReciveState(rpid, user, new ApiCallback<RedPackInfo>() {
+                    @Override
+                    public void onSuccess(RedPackInfo data) {
+                        Log.w(TAG, "redPackReciveState onSuccess:" + new Gson().toJson(data));
+                    }
+
+                    @Override
+                    public void onFailure(ServiceException e) {
+                        super.onFailure(e);
+                        Log.e(TAG, "redPackReciveState onFailure:" + new Gson().toJson(e));
+                    }
+                });
+            }
+        });
+    }
+
+    public void redPackReciveState(String rpid, User user, final ApiCallback<RedPackInfo> apiCallback) {
+        Map<String, String> params = new HashMap<>();
+        params.put("rpid", rpid);
+        RequestUtils.sendPostRequest(Api.RED_PACK_INFO, user.getUid(), user.getToken(), params, new ResponseCallBack<RedPackInfo>() {
+            @Override
+            public void onSuccess(RedPackInfo data) {
+                super.onSuccess(data);
+                apiCallback.onSuccess(data);
+            }
+
+            @Override
+            public void onFailure(ServiceException e) {
+                super.onFailure(e);
+                apiCallback.onFailure(e);
             }
         });
     }

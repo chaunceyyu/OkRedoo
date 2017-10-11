@@ -71,7 +71,7 @@ public class SendRedPackActivity extends BaseActivity implements View.OnClickLis
 
                 name.setText(mTargetUser.getNickName());
                 coin.setText(mTargetUser.getCoins());
-                
+
                 DBManager.getInstance().updateUser(mTargetUser);
             }
 
@@ -133,6 +133,8 @@ public class SendRedPackActivity extends BaseActivity implements View.OnClickLis
                     name.setText(mTargetUser.getNickName());
                     coin.setText(mTargetUser.getCoins());
                     Glide.with(mContext).load(mTargetUser.getPhoto()).into(photo);
+
+                    mAdapter.notifyDataSetChanged();
                 }
                 break;
         }

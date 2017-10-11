@@ -54,14 +54,22 @@
                   android:textColor="@color/black80"
                   android:textSize="14dp"/>
 
+        <Button android:id="@+id/importBtn"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/addBtn"
+                android:text="导入"
+                android:textSize="12dp"/>
+
         <Button android:id="@+id/addBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
-                android:layout_gravity="right"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="0dp"
                 android:layout_marginRight="10dp"
-                android:text="添加账号"
+                android:text="添加"
                 android:textSize="12dp"/>
     </RelativeLayout>
 

@@ -100,10 +100,10 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
 
         if (mUser.getOnline() == 1) {
             addOnlineBtn.setEnabled(false);
-            addOnlineBtn.setText("已是在线账号");
+            addOnlineBtn.setText("已激活");
         } else {
             addOnlineBtn.setEnabled(true);
-            addOnlineBtn.setText("加入在线账号");
+            addOnlineBtn.setText("激活");
         }
 
         Integer state = mActivity.getTokenStateMap().get(mUser.getUid());
