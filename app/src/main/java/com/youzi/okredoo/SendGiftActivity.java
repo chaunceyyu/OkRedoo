@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.youzi.okredoo.adapter.SendCoinAdapter;
+import com.youzi.okredoo.adapter.SendGiftAdapter;
 import com.youzi.okredoo.data.DBManager;
 import com.youzi.okredoo.data.UserList;
 import com.youzi.okredoo.model.User;
@@ -37,7 +37,7 @@ public class SendGiftActivity extends BaseActivity implements View.OnClickListen
     private TextView coin;
 
     private ListView mListView;
-    private SendCoinAdapter mAdapter;
+    private SendGiftAdapter mAdapter;
 
     private User mTargetUser;
 
@@ -89,7 +89,7 @@ public class SendGiftActivity extends BaseActivity implements View.OnClickListen
         coin = (TextView) findViewById(R.id.coin);
         selectBtn = (Button) findViewById(R.id.selectBtn);
         photo = (ImageView) findViewById(R.id.photo);
-        mAdapter = new SendCoinAdapter(mContext);
+        mAdapter = new SendGiftAdapter(mContext);
         mListView.setAdapter(mAdapter);
 
         selectBtn.setOnClickListener(this);

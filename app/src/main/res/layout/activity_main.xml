@@ -68,6 +68,13 @@
                 android:text="发送金币"
                 android:textSize="12dp"/>
 
+        <Button android:id="@+id/giftBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="发送礼物"
+                android:textSize="12dp"/>
+
         <Button android:id="@+id/onlineBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -82,12 +89,6 @@
                 android:text="账号列表"
                 android:textSize="12dp"/>
 
-        <Button android:id="@+id/exitBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="退出"
-                android:textSize="12dp"/>
 
     </LinearLayout>
 

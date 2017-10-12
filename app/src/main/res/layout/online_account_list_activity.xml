@@ -51,7 +51,7 @@
                   android:layout_toRightOf="@+id/coinLayout"
                   android:text="账号 0"
                   android:textColor="@color/black80"
-                  android:textSize="14dp"/>
+                  android:textSize="12dp"/>
 
     </RelativeLayout>
 

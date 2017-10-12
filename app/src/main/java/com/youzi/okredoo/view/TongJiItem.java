@@ -55,10 +55,13 @@ public class TongJiItem extends LinearLayout implements AppBaseAdapter.Binding<T
     }
 
     private void bindData() {
-
-        coin.setText(String.valueOf(mTongJi1.getCount()));
+        coin.setText(String.valueOf(mTongJi1.getCount()) + "(" + getMoney() + ")");
         date.setText(mTongJi1.getDate());
+    }
 
+    private int getMoney() {
+        int c = mTongJi1.getCount();
+        return c / 32;
     }
 
     @Override

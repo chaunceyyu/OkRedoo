@@ -3,7 +3,6 @@ package com.youzi.okredoo.view;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,31 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.youzi.okredoo.R;
-import com.youzi.okredoo.SendCoinActivity;
+import com.youzi.okredoo.SendGiftActivity;
 import com.youzi.okredoo.adapter.AppBaseAdapter;
-import com.youzi.okredoo.adapter.SendCoinAdapter;
 import com.youzi.okredoo.adapter.SendGiftAdapter;
-import com.youzi.okredoo.data.DBManager;
-import com.youzi.okredoo.model.RedPackInfo;
 import com.youzi.okredoo.model.User;
-import com.youzi.okredoo.model.response.Chairesponse;
-import com.youzi.okredoo.model.response.HongbaosendResponse;
-import com.youzi.okredoo.net.Api;
-import com.youzi.okredoo.net.ApiCallback;
-import com.youzi.okredoo.net.RequestUtils;
-import com.youzi.okredoo.net.ResponseCallBack;
-import com.youzi.okredoo.net.ServiceException;
-
-import org.simple.eventbus.EventBus;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import io.rong.imlib.model.Conversation;
-
-import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 /**
  * Created by zhangjiajie on 2017/10/8.
@@ -56,7 +35,7 @@ public class SendGiftItem extends LinearLayout implements AppBaseAdapter.Binding
 
     private Button sendBtn;
 
-    private SendCoinActivity mActivity;
+    private SendGiftActivity mActivity;
 
     public SendGiftItem(Context context) {
         super(context);
@@ -89,7 +68,7 @@ public class SendGiftItem extends LinearLayout implements AppBaseAdapter.Binding
         mUser = data;
         mAdapter = (SendGiftAdapter) baseAdapter;
         mPosition = position;
-        mActivity = (SendCoinActivity) getContext();
+        mActivity = (SendGiftActivity) getContext();
         bindData();
     }
 

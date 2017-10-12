@@ -24,7 +24,6 @@ import com.youzi.okredoo.net.Api;
 import com.youzi.okredoo.net.RequestUtils;
 import com.youzi.okredoo.net.ResponseCallBack;
 import com.youzi.okredoo.net.ServiceException;
-import com.youzi.okredoo.util.AppUtil;
 
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
@@ -77,8 +76,13 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void bindData() {
-        coin.setText(String.valueOf(getCoins()));
+        coin.setText(String.valueOf(getCoins()) + "(" + getMoney() + ")");
         userCount.setText("账号 " + mAdapter.getCount());
+    }
+
+    private int getMoney() {
+        int c = getCoins();
+        return c / 32;
     }
 
     private int getCoins() {
@@ -142,6 +146,25 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
                 }
             });
         }
+    }
+
+    @Subscriber(tag = "getTokenState")
+    private void getTokenState(final User user) {
+        Map<String, String> params = new HashMap<>();
+        RequestUtils.sendPostRequest(Api.GETUSERINFO, user.getUid(), user.getToken(), params, new ResponseCallBack<User2>() {
+            @Override
+            public void onSuccess(User2 u) {
+                tokenStateMap.put(user.getUid(), 1);
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(ServiceException e) {
+                super.onFailure(e);
+                tokenStateMap.put(user.getUid(), 0);
+                mAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     private void initView() {

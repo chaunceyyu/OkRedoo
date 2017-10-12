@@ -41,8 +41,13 @@ public class OnlineAccountListActivity extends BaseActivity implements View.OnCl
     }
 
     private void bindData() {
-        coin.setText(String.valueOf(getCoins()));
+        coin.setText(String.valueOf(getCoins()) + "(" + getMoney() + ")");
         userCount.setText("账号 " + mAdapter.getCount());
+    }
+
+    private int getMoney() {
+        int c = getCoins();
+        return c / 32;
     }
 
     private int getCoins() {

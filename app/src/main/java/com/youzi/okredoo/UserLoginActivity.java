@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.youzi.okredoo.data.DBManager;
 import com.youzi.okredoo.model.User;
@@ -119,6 +118,7 @@ public class UserLoginActivity extends BaseActivity {
 
                             showToast("登录成功");
                             EventBus.getDefault().post("", "refresh_user_list");
+                            EventBus.getDefault().post(u, "getTokenState");
                             finish();
                         }
 
@@ -143,6 +143,7 @@ public class UserLoginActivity extends BaseActivity {
 
                                     showToast("登录成功");
                                     EventBus.getDefault().post("", "refresh_user_list");
+                                    EventBus.getDefault().post(u, "getTokenState");
                                     finish();
                                 }
 

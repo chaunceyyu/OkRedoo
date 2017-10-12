@@ -51,7 +51,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private Button accountBtn;
     private Button clearBtn;
     private Button gundongBtn;
-    private Button exitBtn;
+    private Button giftBtn;
     private Button onlineBtn;
     private Button tongjiBtn;
     private Button sendCoinBtn;
@@ -84,7 +84,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void bindData() {
-        coin.setText(String.valueOf(getCoins()));
+        coin.setText(String.valueOf(getCoins()) + "(" + getMoney() + ")");
         handler.postDelayed(timerRunnable, 60 * 1000);
 
         minMs = App.getSP().getInt("minMs", 1200);
@@ -94,6 +94,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         RedListener.get().setMaxDelay(maxMs);
 
         speed.setText(minMs + "-" + maxMs + "ms");
+    }
+
+    private int getMoney() {
+        int c = getCoins();
+        return c / 32;
     }
 
     Runnable timerRunnable = new Runnable() {
@@ -119,7 +124,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         accountBtn = (Button) findViewById(R.id.accountBtn);
         clearBtn = (Button) findViewById(R.id.clearBtn);
         gundongBtn = (Button) findViewById(R.id.gundongBtn);
-        exitBtn = (Button) findViewById(R.id.exitBtn);
+        giftBtn = (Button) findViewById(R.id.giftBtn);
         onlineBtn = (Button) findViewById(R.id.onlineBtn);
         tongjiBtn = (Button) findViewById(R.id.tongjiBtn);
         sendCoinBtn = (Button) findViewById(R.id.sendCoinBtn);
@@ -150,7 +155,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         accountBtn.setOnClickListener(this);
         clearBtn.setOnClickListener(this);
         gundongBtn.setOnClickListener(this);
-        exitBtn.setOnClickListener(this);
+        giftBtn.setOnClickListener(this);
         onlineBtn.setOnClickListener(this);
         tongjiBtn.setOnClickListener(this);
         sendCoinBtn.setOnClickListener(this);
@@ -219,8 +224,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             clearScreen();
         } else if (view == gundongBtn) {
             mListView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-        } else if (view == exitBtn) {
-            System.exit(0);
+        } else if (view == giftBtn) {
+            startActivity(SendGiftActivity.createIntent(mContext));
         } else if (view == onlineBtn) {
             startActivity(OnlineAccountListActivity.createIntent(mContext));
         } else if (view == tongjiBtn) {

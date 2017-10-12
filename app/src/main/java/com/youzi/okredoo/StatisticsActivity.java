@@ -51,7 +51,12 @@ public class StatisticsActivity extends BaseActivity {
     }
 
     private void bindData() {
-        coin.setText(String.valueOf(getCoins()));
+        coin.setText(String.valueOf(getCoins()) + "(" + getMoney() + ")");
+    }
+
+    private int getMoney() {
+        int c = getCoins();
+        return c / 32;
     }
 
     private int getCoins() {
