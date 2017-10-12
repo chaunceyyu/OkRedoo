@@ -153,10 +153,10 @@
         </LinearLayout>
     </RelativeLayout>
 
-
     <ListView android:id="@+id/listview"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:layout_marginTop="3dp"
               android:layout_weight="1"
               android:divider="@null"
               android:dividerHeight="0dp"

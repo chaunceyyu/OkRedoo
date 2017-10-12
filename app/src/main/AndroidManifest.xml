@@ -41,6 +41,8 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".MyCircleActivity"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".SendImageDynamicActivity"
+                  android:screenOrientation="portrait"/>
 
     </application>
 

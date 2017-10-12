@@ -12,15 +12,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.youzi.okredoo.BaseActivity;
 import com.youzi.okredoo.R;
 import com.youzi.okredoo.model.Dynamic;
 import com.youzi.okredoo.model.DynamicImg;
 import com.youzi.okredoo.model.User;
+import com.youzi.okredoo.net.Api;
+import com.youzi.okredoo.net.RequestUtils;
+import com.youzi.okredoo.net.ResponseCallBack;
+import com.youzi.okredoo.net.ServiceException;
 
 import org.xutils.common.util.DensityUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 个人相册适配器
@@ -41,14 +48,14 @@ public class MyCircleAdapter extends RecyclerView.Adapter<MyCircleAdapter.ViewHo
 
     private List<Dynamic> mDynamicList = new ArrayList<>();
 
-    private Activity mActivity;
+    private BaseActivity mActivity;
 
     private int bitMargin, smallMargin;
 
     private User mUser;
 
     public MyCircleAdapter(Activity activity, User user) {
-        this.mActivity = activity;
+        this.mActivity = (BaseActivity) activity;
         bitMargin = DensityUtil.dip2px(24);
         smallMargin = DensityUtil.dip2px(6);
         mUser = user;
@@ -245,32 +252,21 @@ public class MyCircleAdapter extends RecyclerView.Adapter<MyCircleAdapter.ViewHo
 
     private void deleteDynamic(final Dynamic dy, final int position) {
 
-//        ConfirmDialog confirmDialog = new ConfirmDialog(mActivity, R.style.loading_dialog, "确定要删除吗");
-//        confirmDialog.show();
-//        confirmDialog.setLinstener(new ConfirmDialog.BtnClickLinstener() {
-//            @Override
-//            public void clickOk() {
-//                CommonHelper.deleteDynamic(dy.getDid(), new ResponseCallBack<Object>() {
-//                    @Override
-//                    public void onSuccess(Object data) {
-//                        super.onSuccess(data);
-//                        MyCircleAdapter.this.removeData(position);
-//                        MyCircleAdapter.this.notifyDataSetChanged();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(ServiceException e) {
-//                        super.onFailure(e);
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void clickCancel() {
-//
-//            }
-//        });
+        Map<String, String> para = new HashMap<>();
+        para.put("did", dy.getDid());
+        RequestUtils.sendPostRequest(Api.DELETE_DYNAMIC, mUser.getUid(), mUser.getToken(), para, new ResponseCallBack<Object>() {
+            @Override
+            public void onSuccess(Object data) {
+                super.onSuccess(data);
+                removeData(position);
+                notifyDataSetChanged();
+            }
 
+            @Override
+            public void onFailure(ServiceException e) {
+                mActivity.showToast(e.getMsg());
+            }
+        });
 
     }
 
@@ -381,7 +377,6 @@ public class MyCircleAdapter extends RecyclerView.Adapter<MyCircleAdapter.ViewHo
         mDynamicList.clear();
         notifyDataSetChanged();
     }
-
 
     public int getDataSize() {
         return mDynamicList.size();

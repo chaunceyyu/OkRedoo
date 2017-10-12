@@ -22,6 +22,7 @@ import com.youzi.okredoo.util.DateUtils;
 import com.youzi.okredoo.util.LogUtil;
 
 import org.simple.eventbus.EventBus;
+import org.simple.eventbus.Subscriber;
 import org.xutils.x;
 
 import java.util.ArrayList;
@@ -285,6 +286,10 @@ public class MyCircleActivity extends BaseActivity implements View.OnClickListen
 //        });
 //    }
 
+    @Subscriber(tag = "refreshCycList")
+    private void refreshList() {
+        loadNetData(true);
+    }
 
     private void loadNetData(final boolean refresh) {
         final Map<String, String> params = new HashMap<String, String>();
@@ -396,6 +401,12 @@ public class MyCircleActivity extends BaseActivity implements View.OnClickListen
 //        mPullRefreshRecyclerView.setHeaderLayout(new TudouniHeadLoadingView(this));
 //        mPullRefreshRecyclerView.setFooterLayout(new TudouniFooterLoadingView(this));
 
+        findViewById(R.id.addBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(SendImageDynamicActivity.createIntent(mContext, mUid));
+            }
+        });
 
         initRecyclerView();
     }
