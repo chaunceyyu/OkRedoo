@@ -98,7 +98,7 @@ public class GetMoneyActivity extends BaseActivity {
     @Event(R.id.tixianBtn)
     private void clickTiXian(View view) {
         String s = tixianEdit.getText().toString().trim();
-        int money = Integer.parseInt(s);
+        double money = Double.parseDouble(s);
 
         if (money >= 100) {
             getTaxMoney(money);
@@ -117,11 +117,11 @@ public class GetMoneyActivity extends BaseActivity {
     /**
      * @param money 提现金额
      */
-    private void getTaxMoney(final int money) {
+    private void getTaxMoney(final double money) {
         showProgress("提现", "正在处理...");
         HashMap<String, String> params = new HashMap<>();
         params.put("type", "alipay");
-        params.put("hots", String.valueOf(money));
+        params.put("hots", String.format("%.0f", money));
         RequestUtils.sendPostRequest(Api.WITHDRAW_HOTS, mUser.getUid(), mUser.getToken(), params, new ResponseCallBack<Object>() {
             @Override
             public void onSuccess(Object data) {
