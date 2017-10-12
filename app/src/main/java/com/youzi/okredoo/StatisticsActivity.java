@@ -2,6 +2,7 @@ package com.youzi.okredoo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.ListView;
@@ -40,14 +41,28 @@ public class StatisticsActivity extends BaseActivity {
 
         mListView.setAdapter(mAdapter);
 
-        loadData();
+        showProgress("加载", "数据加载中...");
+        AsyncTask.SERIAL_EXECUTOR.execute(new Runnable() {
+            @Override
+            public void run() {
+                loadData();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.changeDataSet(tongJi1ArrayList);
+                        bindData();
+                        closeProgress();
+                    }
+                });
+            }
+        });
+
     }
 
-    private void loadData() {
-        ArrayList<TongJi1> tongJi1ArrayList = DBManager.getInstance().GetTongJi1List();
-        mAdapter.changeDataSet(tongJi1ArrayList);
+    ArrayList<TongJi1> tongJi1ArrayList;
 
-        bindData();
+    private void loadData() {
+        tongJi1ArrayList = DBManager.getInstance().GetTongJi1List();
     }
 
     private void bindData() {
