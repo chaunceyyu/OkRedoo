@@ -69,8 +69,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private ArrayList<String> dataList = new ArrayList<>();
 
     Handler handler = new Handler();
-    private int minMs = 1200;
-    private int maxMs = 1800;
+    private int minMs = MIN_MS;
+    private int maxMs = MAX_MS;
+
+    public static int MIN_MS = 1200;
+    public static int MAX_MS = 1800;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,8 +90,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         coin.setText(String.valueOf(getCoins()) + "(" + getMoney() + ")");
         handler.postDelayed(timerRunnable, 60 * 1000);
 
-        minMs = App.getSP().getInt("minMs", 1200);
-        maxMs = App.getSP().getInt("maxMs", 1800);
+        minMs = App.getSP().getInt("minMs", MIN_MS);
+        maxMs = App.getSP().getInt("maxMs", MAX_MS);
 
         RedListener.get().setMinDelay(minMs);
         RedListener.get().setMaxDelay(maxMs);
