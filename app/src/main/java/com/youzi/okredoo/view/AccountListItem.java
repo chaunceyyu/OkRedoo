@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.youzi.okredoo.AccountListActivity;
 import com.youzi.okredoo.GetMoneyActivity;
+import com.youzi.okredoo.MyCircleActivity;
 import com.youzi.okredoo.UserLoginActivity;
 import com.youzi.okredoo.R;
 import com.youzi.okredoo.UserInfoEditActivity;
@@ -48,6 +49,7 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
     private Button editInfoBtn;
     private Button addOnlineBtn;
     private Button tixianBtn;
+    private Button dyBtn;
 
     private AccountListActivity mActivity;
 
@@ -79,12 +81,14 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
         editInfoBtn = findViewById(R.id.editInfoBtn);
         addOnlineBtn = findViewById(R.id.addOnlineBtn);
         tixianBtn = findViewById(R.id.tixianBtn);
+        dyBtn = findViewById(R.id.dyBtn);
 
         mEditBtn.setOnClickListener(this);
         mDeleteBtn.setOnClickListener(this);
         editInfoBtn.setOnClickListener(this);
         addOnlineBtn.setOnClickListener(this);
         tixianBtn.setOnClickListener(this);
+        dyBtn.setOnClickListener(this);
     }
 
     @Override
@@ -160,6 +164,8 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
             getContext().startActivity(UserInfoEditActivity.createIntent(getContext(), mUser.getUid()));
         } else if (view == tixianBtn) {
             getContext().startActivity(GetMoneyActivity.createIntent(getContext(), mUser.getUid()));
+        } else if (view == dyBtn) {
+            getContext().startActivity(MyCircleActivity.createIntent(getContext(), mUser.getUid(), 0));
         }
     }
 }

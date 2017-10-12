@@ -39,6 +39,8 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".SendGiftActivity"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".MyCircleActivity"
+                  android:screenOrientation="portrait"/>
 
     </application>
 

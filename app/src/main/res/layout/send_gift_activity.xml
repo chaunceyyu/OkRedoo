@@ -13,6 +13,7 @@
         <ImageView android:id="@+id/photo"
                    android:layout_width="40dp"
                    android:layout_height="40dp"
+                   android:scaleType="centerCrop"
                    android:src="@drawable/youzi_logo"/>
 
         <LinearLayout android:layout_width="match_parent"
@@ -75,6 +76,7 @@
         <ImageView android:id="@+id/dyPhoto"
                    android:layout_width="40dp"
                    android:layout_height="40dp"
+                   android:scaleType="centerCrop"
                    android:src="@drawable/youzi_logo"/>
 
         <LinearLayout android:layout_width="match_parent"
@@ -86,7 +88,7 @@
             <TextView android:id="@+id/dyName"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:hint="标题"
+                      android:hint="内容"
                       android:textSize="14dp"/>
 
             <LinearLayout android:layout_width="match_parent"
@@ -95,13 +97,22 @@
                           android:gravity="center_vertical"
                           android:orientation="horizontal">
 
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:lines="1"
+                          android:text="饭票 "
+                          android:textColor="@color/black80"
+                          android:textSize="12dp"/>
+
                 <TextView android:id="@+id/content"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
+                          android:layout_marginLeft="5dp"
                           android:lines="1"
-                          android:text="内容"
-                          android:textColor="@color/black80"
-                          android:textSize="12dp"/>
+                          android:text="0"
+                          android:textColor="@color/king_one"
+                          android:textSize="16dp"
+                          android:textStyle="bold"/>
 
             </LinearLayout>
         </LinearLayout>

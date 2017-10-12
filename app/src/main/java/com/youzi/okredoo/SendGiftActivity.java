@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.youzi.okredoo.adapter.SendGiftAdapter;
 import com.youzi.okredoo.data.DBManager;
 import com.youzi.okredoo.data.UserList;
+import com.youzi.okredoo.model.Dynamic;
 import com.youzi.okredoo.model.User;
 import com.youzi.okredoo.model.User2;
 import com.youzi.okredoo.net.Api;
@@ -36,13 +37,18 @@ public class SendGiftActivity extends BaseActivity implements View.OnClickListen
     private TextView name;
     private TextView coin;
 
+    private TextView dyName;
+    private TextView content;
+
     private ListView mListView;
     private SendGiftAdapter mAdapter;
 
     private User mTargetUser;
 
     private Button selectBtn;
+    private Button selectDyBtn;
     private ImageView photo;
+    private ImageView dyPhoto;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,12 +93,18 @@ public class SendGiftActivity extends BaseActivity implements View.OnClickListen
         mListView = (ListView) findViewById(R.id.listview);
         name = (TextView) findViewById(R.id.name);
         coin = (TextView) findViewById(R.id.coin);
+        dyName = (TextView) findViewById(R.id.dyName);
+        content = (TextView) findViewById(R.id.content);
+
         selectBtn = (Button) findViewById(R.id.selectBtn);
+        selectDyBtn = (Button) findViewById(R.id.selectDyBtn);
         photo = (ImageView) findViewById(R.id.photo);
+        dyPhoto = (ImageView) findViewById(R.id.dyPhoto);
         mAdapter = new SendGiftAdapter(mContext);
         mListView.setAdapter(mAdapter);
 
         selectBtn.setOnClickListener(this);
+        selectDyBtn.setOnClickListener(this);
     }
 
     private void loadData() {
@@ -119,6 +131,12 @@ public class SendGiftActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View view) {
         if (view == selectBtn) {
             startActivityForResult(SelectUserListActivity.createIntent(mContext), 1);
+        } else if (view == selectDyBtn) {
+            if (mTargetUser == null) {
+                showToast("无目标用户");
+                return;
+            }
+            startActivityForResult(MyCircleActivity.createIntent(mContext, mTargetUser.getUid(), 1), 2);
         }
     }
 
@@ -137,6 +155,22 @@ public class SendGiftActivity extends BaseActivity implements View.OnClickListen
                     mAdapter.notifyDataSetChanged();
                 }
                 break;
+
+            case 2:
+                if (resultCode == RESULT_OK) {
+                    Dynamic dynamic = (Dynamic) data.getSerializableExtra("dynamic");
+                    dyName.setText(dynamic.getContent());
+                    content.setText(dynamic.getHots());
+                    if (dynamic.getImages() != null && dynamic.getImages().get(0) != null) {
+                        Glide.with(mContext).load(dynamic.getImages().get(0)).into(dyPhoto);
+                    } else if (dynamic.getVideoCover() != null) {
+                        Glide.with(mContext).load(dynamic.getVideoCover()).into(dyPhoto);
+                    }
+
+                    mAdapter.notifyDataSetChanged();
+                }
+                break;
+
         }
     }
 }
