@@ -44,6 +44,7 @@ public class SendGiftActivity extends BaseActivity implements View.OnClickListen
     private SendGiftAdapter mAdapter;
 
     private User mTargetUser;
+    private Dynamic mTargetDy;
 
     private Button selectBtn;
     private Button selectDyBtn;
@@ -159,6 +160,7 @@ public class SendGiftActivity extends BaseActivity implements View.OnClickListen
             case 2:
                 if (resultCode == RESULT_OK) {
                     Dynamic dynamic = (Dynamic) data.getSerializableExtra("dynamic");
+                    mTargetDy = dynamic;
                     dyName.setText(dynamic.getContent());
                     content.setText(dynamic.getHots());
                     if (dynamic.getImages() != null && dynamic.getImages().get(0) != null) {
