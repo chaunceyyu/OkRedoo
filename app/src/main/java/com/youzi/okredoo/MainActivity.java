@@ -303,7 +303,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         @Override
         public void run() {
             mProgressBar2.setVisibility(View.INVISIBLE);
-            coin.setText(String.valueOf(getCoins()));
+            coin.setText(String.valueOf(getCoins()) + "(" + getMoney() + ")");
         }
     };
 
