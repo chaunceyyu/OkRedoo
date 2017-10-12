@@ -104,7 +104,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     Runnable timerRunnable = new Runnable() {
         @Override
         public void run() {
-            refreshUserListInfo();
+            if (RedListener.get().isEnable()) {
+                refreshUserListInfo();
+            }
             handler.postDelayed(timerRunnable, 60 * 1000);
         }
     };
