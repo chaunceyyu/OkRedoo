@@ -14,6 +14,8 @@ import com.youzi.okredoo.model.User;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -114,6 +116,13 @@ public class DBManager {
 
         ArrayList<TongJi1> tongJi1s = new ArrayList<>();
         tongJi1s.addAll(tongJi1HashMap.values());
+
+        Collections.sort(tongJi1s, new Comparator<TongJi1>() {
+            @Override
+            public int compare(TongJi1 t1, TongJi1 t2) {
+                return t1.getDate().compareTo(t2.getDate());
+            }
+        });
 
         return tongJi1s;
     }
