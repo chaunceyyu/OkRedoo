@@ -132,7 +132,7 @@ public class GiftWindow extends BottomPushPopupWindow<Void> implements OnClickLi
         loadData();
     }
 
-    void loadData() {
+    private void loadData() {
         tvCoin.setText(mUser.getCoins());
         userCoins(new ApiCallback<Other>() {
             @Override
