@@ -396,7 +396,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
 
     public void showDelayCloseMenu() {
-        String[] textArray = new String[]{"30min", "60min", "90min", "120min", "180min", "210min", "240min", "Cancel"};
+        String[] textArray = new String[]{"30min", "60min", "90min", "120min", "150min", "180min", "210min", "240min", "Cancel"};
 
         new MenuDialog(mContext).setMenuText(textArray)
                 .setOnItemClickListener(new MenuDialog.OnItemClickListener() {
@@ -417,12 +417,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                                 min = 120;
                                 break;
                             case 4:
-                                min = 180;
+                                min = 150;
                                 break;
                             case 5:
-                                min = 210;
+                                min = 180;
                                 break;
                             case 6:
+                                min = 210;
+                                break;
+                            case 7:
                                 min = 240;
                                 break;
                         }
