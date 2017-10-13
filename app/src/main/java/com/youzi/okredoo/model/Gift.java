@@ -26,6 +26,7 @@ public class Gift implements Serializable {
 
 
     private int giftCount;
+    private int sequence;
     private String sendUserId;
     private String sendUserName;
     private String sendUserPic;
@@ -136,6 +137,14 @@ public class Gift implements Serializable {
         this.giftCount = giftCount;
     }
 
+    public int getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(int sequence) {
+        this.sequence = sequence;
+    }
+
     public String getSendUserId() {
         return sendUserId;
     }
@@ -182,7 +191,7 @@ public class Gift implements Serializable {
     }
 
     public static String getDownloadPath(String fileName) {
-        //这里的扩展名其实没有意义，经过几次修改，可能是apng/webp/zip
+        //这里的扩展名其实没有意义，经过几次修改，可能是apng/webp/zip  获取 APP Download 文件夹
         return App.getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName + ".zip";
     }
 }

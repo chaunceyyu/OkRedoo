@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/giftItem"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/giftbg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="0.5dp"
+            android:layout_marginRight="0.5dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/ivIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"/>
+
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:textSize="10dp"
+                android:textColor="@color/orange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ivIcon"
+                android:layout_centerHorizontal="true"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:text=""/>
+
+            <TextView
+                android:id="@+id/tvExp"
+                android:textSize="10dp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvTitle"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"/>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/ivChoise"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/icon_choise_gift"
+            android:visibility="gone"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="#33ffffff"/>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="#33ffffff"/>
+
+    </RelativeLayout>
+</RelativeLayout>

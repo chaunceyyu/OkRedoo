@@ -14,7 +14,20 @@ import com.youzi.okredoo.R;
 import com.youzi.okredoo.SendGiftActivity;
 import com.youzi.okredoo.adapter.AppBaseAdapter;
 import com.youzi.okredoo.adapter.SendGiftAdapter;
+import com.youzi.okredoo.gift.GiftWindow;
+import com.youzi.okredoo.model.Gift;
+import com.youzi.okredoo.model.GiftPayMent;
+import com.youzi.okredoo.model.Other;
 import com.youzi.okredoo.model.User;
+import com.youzi.okredoo.net.Api;
+import com.youzi.okredoo.net.RequestUtils;
+import com.youzi.okredoo.net.ResponseCallBack;
+import com.youzi.okredoo.net.ServiceException;
+
+import org.simple.eventbus.EventBus;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by zhangjiajie on 2017/10/8.
@@ -95,6 +108,70 @@ public class SendGiftItem extends LinearLayout implements AppBaseAdapter.Binding
                 mActivity.showToast("无目标用户");
                 return;
             }
+
+            if (mActivity.getTargetDy() == null) {//发私人礼物
+                sendPrivateGift();
+
+            } else {//发动态礼物
+                sendDyGift();
+            }
         }
     }
+
+    private void sendDyGift() {
+        final GiftWindow pop = new GiftWindow(mActivity, mUser, mActivity.getTargetDy().getDid(), mActivity.getTargetDy().getUid(), "dny_" + mActivity
+                .getTargetDy()
+                .getDid(), GiftWindow.CIRCLE, null);
+        pop.show(mActivity);
+        pop.setGiftLinstener(new GiftWindow.GiftListener() {
+            @Override
+            public void sendGiftOk(Gift gift, int count, String incre) {
+
+                int totalHots = Integer.parseInt(mActivity.getTargetDy().getHots()) + Integer.parseInt(incre);
+
+                EventBus.getDefault().post("", "refreshTargetUser");
+            }
+        });
+    }
+
+    private void sendPrivateGift() {
+        GiftWindow pop = new GiftWindow(mActivity, mUser, mActivity.getTargetUser().getUid(), mActivity.getTargetUser().getUid(), GiftWindow
+                .PRIVATECHAT);
+        pop.show(mActivity);
+        pop.setOnSendGiftClickListener(new GiftWindow.OnSendGiftClickListener() {
+            @Override
+            public void toSendGift(GiftPayMent gpm, Gift choiseGift) {
+                sendGiftMsg(gpm, choiseGift);
+            }
+        });
+    }
+
+    public void sendGiftMsg(final GiftPayMent gpm, final Gift choiseGift) {
+        Map<String, String> params = new HashMap<>();
+        params.put("amount", gpm.getAmount());
+        params.put("conversationType", gpm.getChatType());
+        params.put("count", gpm.getCount());
+        params.put("gid", gpm.getGid());
+        params.put("targetid", gpm.getTargetid());
+        params.put("receiveId", gpm.getTargetid());
+        params.put("tid", gpm.getTid());
+        params.put("type", gpm.getType());
+        RequestUtils.sendPostRequest(Api.SEND_GIFT, mUser.getUid(), mUser.getToken(), params, new ResponseCallBack<Other>() {
+            @Override
+            public void onSuccess(Other data) {
+                super.onSuccess(data);
+
+                EventBus.getDefault().post("", "refreshTargetUser");
+            }
+
+            @Override
+            public void onFailure(ServiceException e) {
+                super.onFailure(e);
+                mActivity.showToast(e.getMsg());
+            }
+        });
+
+
+    }
+
 }

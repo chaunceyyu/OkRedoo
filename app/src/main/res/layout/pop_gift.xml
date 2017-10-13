@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:id="@+id/pop_layout"
+             xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/trans"
+             android:clickable="true"
+             android:orientation="vertical">
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/trans">
+
+        <ScrollView
+            android:id="@+id/bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#c0000000"
+            android:clickable="true">
+
+            <RelativeLayout
+                android:id="@+id/vCover"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/llGift"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:id="@+id/rlGiftList"
+                        android:layout_width="match_parent"
+                        android:layout_height="194dp"
+                        android:background="@color/trans"
+                        android:orientation="vertical">
+
+                        <android.support.v4.view.ViewPager
+                            android:id="@+id/guidePages"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:background="@color/trans"/>
+
+                        <LinearLayout
+                            android:id="@+id/llPointView"
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal"/>
+
+                    </LinearLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/trans"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <TextView
+                            android:id="@+id/tvPay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:padding="6dp"
+                            android:text="充值:"
+                            android:textColor="@color/orange"
+                            android:textSize="14dp"/>
+
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="4dp"
+                            android:layout_toRightOf="@+id/tvPay"
+                            android:src="@drawable/live_coin"/>
+
+                        <TextView
+                            android:id="@+id/tvCoin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="22dp"
+                            android:layout_toRightOf="@+id/tvPay"
+                            android:text="0"
+                            android:textColor="@color/white"
+                            android:textSize="16dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="4dp"
+                            android:layout_toRightOf="@+id/tvCoin"
+                            android:text=">"
+                            android:textColor="@color/white"
+                            android:textSize="16dp"/>
+
+                        <LinearLayout
+                            android:id="@+id/llRight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:id="@+id/llCount"
+                                android:layout_width="60dp"
+                                android:layout_height="26dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="10dp"
+                                android:layout_toLeftOf="@+id/tvSend"
+                                android:background="@drawable/playview_count_style"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/tvCount"
+                                    android:layout_width="40dp"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="连发"
+                                    android:textColor="@color/white"
+                                    android:textSize="12dp"/>
+
+                                <ImageView
+                                    android:layout_width="10dp"
+                                    android:layout_height="10dp"
+                                    android:layout_alignParentRight="true"
+                                    android:gravity="center"
+                                    android:src="@drawable/icon_jiantou_up"/>
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:id="@+id/llHongbao"
+                                android:layout_width="60dp"
+                                android:layout_height="26dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="10dp"
+                                android:layout_toLeftOf="@+id/tvSend"
+                                android:background="@drawable/giftpop_hongbao_style"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <ImageView
+                                    android:id="@+id/imageView6"
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:layout_alignParentLeft="true"
+                                    android:src="@drawable/icon_hongbao_02"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="5dp"
+                                    android:gravity="center_vertical"
+                                    android:text="红包"
+                                    android:textColor="@color/white"
+                                    android:textSize="12dp"/>
+
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvSend"
+                                android:layout_width="60dp"
+                                android:layout_height="26dp"
+                                android:background="@drawable/playview_paycoin_style"
+                                android:gravity="center"
+                                android:text="赠送"
+                                android:textColor="@color/white"
+                                android:textSize="12dp"/>
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:clipChildren="false">
+
+            <com.youzi.okredoo.gift.GiftComboView
+                android:id="@+id/tvLianfa"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/button_gift_combo"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.1"
+                android:textColor="#7D4718"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+</FrameLayout>

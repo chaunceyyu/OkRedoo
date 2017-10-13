@@ -81,6 +81,7 @@ dependencies {
     compile 'org.greenrobot:greendao-generator:3.0.0'
     compile 'org.simple:androideventbus:1.0.5.1'
     compile 'com.kevin:pulltorefresh:1.0.7'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
 
     compile rootProject.ext.okhttp
     compile rootProject.ext.glide

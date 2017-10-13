@@ -77,7 +77,7 @@ public class SendGiftActivity extends BaseActivity implements View.OnClickListen
                 mTargetUser.setNickName(u.getNickName());
 
                 name.setText(mTargetUser.getNickName());
-                coin.setText(mTargetUser.getCoins());
+                coin.setText(mTargetUser.getHots());
 
                 DBManager.getInstance().updateUser(mTargetUser);
             }
@@ -120,6 +120,10 @@ public class SendGiftActivity extends BaseActivity implements View.OnClickListen
 
     public User getTargetUser() {
         return mTargetUser;
+    }
+
+    public Dynamic getTargetDy() {
+        return mTargetDy;
     }
 
 

@@ -1,0 +1,82 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/giftBarrageWrapper"
+    android:layout_width="match_parent"
+    android:paddingRight="20dp"
+    android:gravity="center_vertical"
+    android:layout_height="50dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:gravity="bottom"
+        android:paddingRight="15dp"
+        android:layout_height="50dp">
+
+        <RelativeLayout
+            android:id="@+id/rlBrrage"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/gift_anim_bg"
+            android:paddingRight="55dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/ivPhoto"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="2dp"
+                android:src="@drawable/youzi_logo"
+                app:civ_border_color="@color/white" />
+
+            <LinearLayout
+                android:id="@+id/llRight"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/ivPhoto"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:textColor="@color/white"
+                    android:textSize="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kimil" />
+                <TextView
+                    android:id="@+id/tvMsg"
+                    android:textSize="10sp"
+                    android:textColor="@color/msgColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="40"
+                    android:text="好稀饭你呀a" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/ivGift"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_alignRight="@+id/rlBrrage"
+            android:layout_marginRight="5dp"/>
+
+        <TextView
+            android:id="@+id/animation_num"
+            android:layout_toRightOf="@+id/ivGift"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:layout_marginLeft="3dp"
+            android:paddingBottom="5dp"
+            android:textSize="28sp"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/msgColor"/>
+    </RelativeLayout>
+</RelativeLayout>
+
+
