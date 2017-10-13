@@ -310,6 +310,7 @@ public class MyCircleActivity extends BaseActivity implements View.OnClickListen
 //                if (data != null && !data.isEmpty() && !refresh) {
 //                    mPage++;                    //上拉时拉到有数据才+1
 //                }
+                mAdapter.clear();
                 List<Dynamic> ls = resetData(data != null ? data : new ArrayList<Dynamic>(), refresh);
                 mAdapter.addData(ls);
 
