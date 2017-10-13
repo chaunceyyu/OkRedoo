@@ -287,7 +287,7 @@ public class MyCircleActivity extends BaseActivity implements View.OnClickListen
 //    }
 
     @Subscriber(tag = "refreshCycList")
-    private void refreshList() {
+    private void refreshList(String msg) {
         loadNetData(true);
     }
 
