@@ -14,15 +14,23 @@ import com.bumptech.glide.Glide;
 import com.youzi.okredoo.AccountListActivity;
 import com.youzi.okredoo.GetMoneyActivity;
 import com.youzi.okredoo.MyCircleActivity;
-import com.youzi.okredoo.UserLoginActivity;
 import com.youzi.okredoo.R;
 import com.youzi.okredoo.UserInfoEditActivity;
+import com.youzi.okredoo.UserLoginActivity;
 import com.youzi.okredoo.adapter.AccountListAdapter;
 import com.youzi.okredoo.adapter.AppBaseAdapter;
 import com.youzi.okredoo.data.DBManager;
+import com.youzi.okredoo.model.MyHots;
 import com.youzi.okredoo.model.User;
+import com.youzi.okredoo.net.Api;
+import com.youzi.okredoo.net.RequestUtils;
+import com.youzi.okredoo.net.ResponseCallBack;
+import com.youzi.okredoo.net.ServiceException;
 
 import org.simple.eventbus.EventBus;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by zhangjiajie on 2017/10/8.
@@ -39,6 +47,7 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
     private TextView idCode;
     private TextView token;
     private TextView coin;
+    private TextView piao;
 
     private TextView tokenState;
 
@@ -52,6 +61,8 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
     private Button dyBtn;
 
     private AccountListActivity mActivity;
+
+    public HashMap<String, MyHots> mMyHotsHashMap = new HashMap<>();
 
     public AccountListItem(Context context) {
         super(context);
@@ -73,6 +84,7 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
         idCode = findViewById(R.id.idcode);
         token = findViewById(R.id.token);
         coin = findViewById(R.id.coin);
+        piao = findViewById(R.id.piao);
         photo = findViewById(R.id.photo);
         tokenState = findViewById(R.id.tokenState);
 
@@ -136,7 +148,33 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
         token.setText(mUser.getToken());
         coin.setText(mUser.getCoins());
 
+
         Glide.with(getContext()).load(mUser.getPhoto()).into(photo);
+
+        MyHots myHots = mMyHotsHashMap.get(mUser.getUid());
+        if (myHots != null) {
+            piao.setText(myHots.getHots());
+        } else {
+            loadHots();
+        }
+
+    }
+
+    private void loadHots() {
+        Map<String, String> params = new HashMap<>();
+        RequestUtils.sendPostRequest(Api.ACCOUNT_INCOME, mUser.getUid(), mUser.getToken(), params, new ResponseCallBack<MyHots>() {
+            @Override
+            public void onSuccess(MyHots info) {
+                mMyHotsHashMap.put(mUser.getUid(), info);
+                piao.setText(info.getHots());
+            }
+
+            @Override
+            public void onFailure(ServiceException e) {
+                mActivity.showToast(e.getMsg());
+            }
+        });
+
     }
 
     @Override

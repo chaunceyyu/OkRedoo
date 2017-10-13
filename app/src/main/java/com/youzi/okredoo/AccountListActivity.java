@@ -92,7 +92,11 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
         }
         int coins = 0;
         for (int i = 0; i < users.size(); i++) {
-            coins += Integer.valueOf(users.get(i).getCoins());
+            try {
+                coins += Integer.valueOf(users.get(i).getCoins());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return coins;
     }

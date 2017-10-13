@@ -120,7 +120,7 @@ public class DBManager {
         Collections.sort(tongJi1s, new Comparator<TongJi1>() {
             @Override
             public int compare(TongJi1 t1, TongJi1 t2) {
-                return t1.getDate().compareTo(t2.getDate());
+                return t2.getDate().compareTo(t1.getDate());
             }
         });
 

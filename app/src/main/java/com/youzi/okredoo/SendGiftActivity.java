@@ -15,6 +15,7 @@ import com.youzi.okredoo.adapter.SendGiftAdapter;
 import com.youzi.okredoo.data.DBManager;
 import com.youzi.okredoo.data.UserList;
 import com.youzi.okredoo.model.Dynamic;
+import com.youzi.okredoo.model.MyHots;
 import com.youzi.okredoo.model.User;
 import com.youzi.okredoo.model.User2;
 import com.youzi.okredoo.net.Api;
@@ -67,27 +68,55 @@ public class SendGiftActivity extends BaseActivity implements View.OnClickListen
         EventBus.getDefault().unregister(this);
     }
 
-    @Subscriber(tag = "refreshTargetUser")
+    @Subscriber(tag = "gift_refreshTargetUser")
     private void refreshTargetUser(String msg) {
+
         Map<String, String> params = new HashMap<>();
-        RequestUtils.sendPostRequest(Api.GETUSERINFO, mTargetUser.getUid(), mTargetUser.getToken(), params, new ResponseCallBack<User2>() {
+        RequestUtils.sendPostRequest(Api.ACCOUNT_INCOME, mTargetUser.getUid(), mTargetUser.getToken(), params, new ResponseCallBack<MyHots>() {
             @Override
-            public void onSuccess(User2 u) {
-                mTargetUser.setCoins(u.getCoins());
-                mTargetUser.setNickName(u.getNickName());
-
-                name.setText(mTargetUser.getNickName());
+            public void onSuccess(MyHots info) {
+                mTargetUser.setHots(info.getHots());
                 coin.setText(mTargetUser.getHots());
-
                 DBManager.getInstance().updateUser(mTargetUser);
             }
 
             @Override
             public void onFailure(ServiceException e) {
-                super.onFailure(e);
                 showToast(e.getMsg());
             }
         });
+
+//        Map<String, String> params = new HashMap<>();
+//        RequestUtils.sendPostRequest(Api.GETUSERINFO, mTargetUser.getUid(), mTargetUser.getToken(), params, new ResponseCallBack<User2>() {
+//            @Override
+//            public void onSuccess(User2 u) {
+//                mTargetUser.setHots(u.getHots());
+//                mTargetUser.setNickName(u.getNickName());
+//
+//                name.setText(mTargetUser.getNickName());
+//                coin.setText(mTargetUser.getHots());
+//
+//                DBManager.getInstance().updateUser(mTargetUser);
+//            }
+//
+//            @Override
+//            public void onFailure(ServiceException e) {
+//                super.onFailure(e);
+//                showToast(e.getMsg());
+//            }
+//        });
+    }
+
+    @Subscriber(tag = "gift_refreshTargetDy")
+    private void updateHotsDy(String hots){
+        mTargetDy.setHots(hots);
+        dyName.setText(mTargetDy.getContent());
+        content.setText(hots);
+        if (mTargetDy.getImages() != null && mTargetDy.getImages().get(0) != null) {
+            Glide.with(mContext).load(mTargetDy.getImages().get(0).getImage() + "_150").into(dyPhoto);
+        } else if (mTargetDy.getVideoCover() != null) {
+            Glide.with(mContext).load(mTargetDy.getVideoCover()).into(dyPhoto);
+        }
     }
 
     private void initView() {
@@ -156,7 +185,7 @@ public class SendGiftActivity extends BaseActivity implements View.OnClickListen
                     name.setText(mTargetUser.getNickName());
                     coin.setText(mTargetUser.getHots());
                     Glide.with(mContext).load(mTargetUser.getPhoto()).into(photo);
-
+                    refreshTargetUser("");
                     mAdapter.notifyDataSetChanged();
                 }
                 break;
@@ -168,11 +197,10 @@ public class SendGiftActivity extends BaseActivity implements View.OnClickListen
                     dyName.setText(dynamic.getContent());
                     content.setText(dynamic.getHots());
                     if (dynamic.getImages() != null && dynamic.getImages().get(0) != null) {
-                        Glide.with(mContext).load(dynamic.getImages().get(0)).into(dyPhoto);
+                        Glide.with(mContext).load(dynamic.getImages().get(0).getImage() + "_150").into(dyPhoto);
                     } else if (dynamic.getVideoCover() != null) {
                         Glide.with(mContext).load(dynamic.getVideoCover()).into(dyPhoto);
                     }
-
                     mAdapter.notifyDataSetChanged();
                 }
                 break;

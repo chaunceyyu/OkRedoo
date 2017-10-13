@@ -26,7 +26,7 @@
             <TextView android:id="@+id/name"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:hint="昵称"
+                      android:hint="选择用户"
                       android:textSize="14dp"/>
 
             <LinearLayout android:layout_width="match_parent"
@@ -88,7 +88,7 @@
             <TextView android:id="@+id/dyName"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:hint="内容"
+                      android:hint="选择动态"
                       android:textSize="14dp"/>
 
             <LinearLayout android:layout_width="match_parent"

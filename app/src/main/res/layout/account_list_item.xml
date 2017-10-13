@@ -91,6 +91,24 @@
                   android:textSize="16dp"
                   android:textStyle="bold"/>
 
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="20dp"
+                  android:lines="1"
+                  android:text="饭票 "
+                  android:textColor="@color/black80"
+                  android:textSize="14dp"/>
+
+        <TextView android:id="@+id/piao"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="5dp"
+                  android:lines="1"
+                  android:text="0"
+                  android:textColor="@color/king_one"
+                  android:textSize="16dp"
+                  android:textStyle="bold"/>
+
     </LinearLayout>
 
     <LinearLayout android:id="@+id/bottomLayout"

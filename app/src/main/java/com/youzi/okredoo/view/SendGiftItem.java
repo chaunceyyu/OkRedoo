@@ -126,10 +126,10 @@ public class SendGiftItem extends LinearLayout implements AppBaseAdapter.Binding
         pop.setGiftLinstener(new GiftWindow.GiftListener() {
             @Override
             public void sendGiftOk(Gift gift, int count, String incre) {
-
                 int totalHots = Integer.parseInt(mActivity.getTargetDy().getHots()) + Integer.parseInt(incre);
-
-                EventBus.getDefault().post("", "refreshTargetUser");
+//                mUser.setCoins(String.valueOf(Integer.valueOf(mUser.getCoins()) - Integer.parseInt(incre)));
+                bindData();
+                EventBus.getDefault().post(String.valueOf(totalHots), "gift_refreshTargetDy");
             }
         });
     }
@@ -160,8 +160,9 @@ public class SendGiftItem extends LinearLayout implements AppBaseAdapter.Binding
             @Override
             public void onSuccess(Other data) {
                 super.onSuccess(data);
-
-                EventBus.getDefault().post("", "refreshTargetUser");
+                mUser.setCoins(String.valueOf(Integer.valueOf(mUser.getCoins()) - Integer.valueOf(gpm.getCount())));
+                bindData();
+                EventBus.getDefault().post("", "gift_refreshTargetUser");
             }
 
             @Override

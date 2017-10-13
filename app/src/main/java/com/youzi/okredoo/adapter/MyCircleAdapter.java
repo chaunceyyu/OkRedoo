@@ -29,6 +29,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.youzi.okredoo.R.id.tvHots;
+
 /**
  * 个人相册适配器
  * Created by hjw on 17/1/23.
@@ -74,6 +76,9 @@ public class MyCircleAdapter extends RecyclerView.Adapter<MyCircleAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
         final Dynamic dynamic = mDynamicList.get(position);
+
+        holder.tvHots.setText("饭票 " + dynamic.getHots());
+
         holder.tvDate.setText(dynamic.getLastDate());
         holder.tvMonth.setText(dynamic.getMonth());
         holder.tvDay.setText(dynamic.getDay());
@@ -456,6 +461,7 @@ public class MyCircleAdapter extends RecyclerView.Adapter<MyCircleAdapter.ViewHo
         public LinearLayout llImgView;
 
         public TextView tvDelete;
+        public TextView tvHots;
 
         //        public CircleProgressBar progressView;
         public View iconPlay;
@@ -474,6 +480,7 @@ public class MyCircleAdapter extends RecyclerView.Adapter<MyCircleAdapter.ViewHo
             this.tvDay = (TextView) itemView.findViewById(R.id.tvDay);
             this.tvContent = (TextView) itemView.findViewById(R.id.tvContent);
             this.tvImgCount = (TextView) itemView.findViewById(R.id.tvImgCount);
+            this.tvHots = (TextView) itemView.findViewById(R.id.tvHots);
 
 
             this.rlImage = (RelativeLayout) itemView.findViewById(R.id.rlImage);
