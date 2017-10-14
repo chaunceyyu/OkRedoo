@@ -205,7 +205,11 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
         for (int i = 0; i < users.size(); i++) {
 
             User u = users.get(i);
-            stringBuilder.append(u.getPhone()).append(":").append(u.getPwd());
+            if (u.getPhone() != null && u.getPwd() != null) {
+                stringBuilder.append(u.getPhone()).append(":").append(u.getPwd());
+            } else if (u.getUid() != null && u.getToken() != null) {
+                stringBuilder.append(u.getUid()).append(":").append(u.getToken());
+            }
             if (i != users.size() - 1) {
                 stringBuilder.append(",");
             }
@@ -253,7 +257,12 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
                 String phone = ss.split(":")[0];
                 String password = ss.split(":")[1];
                 if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(password)) {
-                    getUser(phone, password);
+                    if (phone.length() == 11) {
+                        getUserByPhone(phone, password);//phone and password
+                    } else {
+                        getUserByUid(phone, password);//uid and token
+                    }
+
                 } else {
                     showToast("账号数据有误");
                 }
@@ -263,7 +272,32 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    private void getUser(final String phone, final String password) {
+    private void getUserByUid(String uid, final String token) {
+        Map<String, String> params = new HashMap<>();
+        RequestUtils.sendPostRequest(Api.GETUSERINFO, uid, token, params, new
+                ResponseCallBack<User>() {
+                    @Override
+                    public void onSuccess(User u) {
+                        u.setToken(token);
+                        if (DBManager.getInstance().isExistUser(u.getUid())) {
+                            DBManager.getInstance().updateUser(u);
+                        } else {
+                            DBManager.getInstance().saveUser(u);
+                        }
+
+                        mHandler.removeCallbacks(loadRunnable);
+                        mHandler.postDelayed(loadRunnable, 1000);
+                    }
+
+                    @Override
+                    public void onFailure(ServiceException e) {
+                        super.onFailure(e);
+                        showToast(e.getMsg());
+                    }
+                });
+    }
+
+    private void getUserByPhone(final String phone, final String password) {
         Map<String, String> params = new HashMap<>();
         params.put("user", phone);
         params.put("password", password);
