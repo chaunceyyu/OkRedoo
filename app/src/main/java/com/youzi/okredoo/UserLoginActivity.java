@@ -1,5 +1,7 @@
 package com.youzi.okredoo;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,6 +45,7 @@ public class UserLoginActivity extends BaseActivity {
 
     //    private Button mSavebBtn;
     private Button mGetTokenBtn;
+    private Button importBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,6 +94,7 @@ public class UserLoginActivity extends BaseActivity {
 //        });
 
         mGetTokenBtn = (Button) findViewById(R.id.getTokenBtn);
+        importBtn = (Button) findViewById(R.id.importBtn);
 
         mGetTokenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,6 +161,29 @@ public class UserLoginActivity extends BaseActivity {
                     showToast("账号参数无效");
                 }
 
+            }
+        });
+
+
+        importBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //获取剪贴板管理器：
+                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clipData = cm.getPrimaryClip();
+                if (clipData != null && clipData.getItemAt(0) != null) {
+                    String s = clipData.getItemAt(0).getText().toString();
+                    if (!TextUtils.isEmpty(s)) {
+                        String[] str = s.split(",");
+                        if (str.length == 2) {
+                            String uid = str[0];
+                            String token = str[1];
+
+                            uidEdit.setText(uid);
+                            mToken.setText(token);
+                        }
+                    }
+                }
             }
         });
 

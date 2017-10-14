@@ -38,13 +38,27 @@
           android:layout_marginTop="10dp"
           android:background="@color/split_color"/>
 
-    <EditText android:id="@+id/uid"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_alignParentLeft="true"
-              android:layout_centerVertical="true"
-              android:hint="UID"
-              android:textSize="16dp"/>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginBottom="5dp"
+                  android:orientation="horizontal">
+
+        <EditText android:id="@+id/uid"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentLeft="true"
+                  android:layout_centerVertical="true"
+                  android:layout_weight="1"
+                  android:hint="UID"
+                  android:textSize="16dp"/>
+
+        <Button android:id="@+id/importBtn"
+                android:layout_width="50dp"
+                android:layout_height="35dp"
+                android:text="导入"
+                android:textSize="12dp"/>
+    </LinearLayout>
+
 
     <EditText android:id="@+id/token"
               android:layout_width="match_parent"
@@ -61,9 +75,9 @@
             android:textSize="14dp"/>
 
     <!--<Button android:id="@+id/saveBtn"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="45dp"-->
-            <!--android:text="保存"-->
-            <!--android:textSize="14dp"/>-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="45dp"-->
+    <!--android:text="保存"-->
+    <!--android:textSize="14dp"/>-->
 
 </LinearLayout>
