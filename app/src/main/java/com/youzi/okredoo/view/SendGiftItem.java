@@ -160,7 +160,7 @@ public class SendGiftItem extends LinearLayout implements AppBaseAdapter.Binding
             @Override
             public void onSuccess(Other data) {
                 super.onSuccess(data);
-                mUser.setCoins(String.valueOf(Integer.valueOf(mUser.getCoins()) - Integer.valueOf(gpm.getCount())));
+                mUser.setCoins(String.valueOf(Integer.valueOf(mUser.getCoins()) - Integer.valueOf(gpm.getAmount())));
                 bindData();
                 EventBus.getDefault().post("", "gift_refreshTargetUser");
             }
