@@ -24,6 +24,7 @@ import com.youzi.okredoo.net.Api;
 import com.youzi.okredoo.net.RequestUtils;
 import com.youzi.okredoo.net.ResponseCallBack;
 import com.youzi.okredoo.net.ServiceException;
+import com.youzi.okredoo.util.AppUtil;
 
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
@@ -118,16 +119,6 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
         mAdapter.changeDataSet(users);
         bindData();
 
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < users.size(); i++) {
-
-            User u = users.get(i);
-            stringBuilder.append(u.getPhone()).append(":").append(u.getPwd());
-            if (i != users.size() - 1) {
-                stringBuilder.append(",");
-            }
-        }
-//        AppUtil.copyToClipboard(mContext, stringBuilder.toString());
     }
 
     private void getTokenState() {
@@ -201,7 +192,25 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
                 DBManager.getInstance().updateUser(u);
             }
             mAdapter.notifyDataSetChanged();
+
+            copyAccountToString();
+
+            showToast("全部激活成功");
         }
+    }
+
+    private void copyAccountToString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        UserList users = mAdapter.getDataList();
+        for (int i = 0; i < users.size(); i++) {
+
+            User u = users.get(i);
+            stringBuilder.append(u.getPhone()).append(":").append(u.getPwd());
+            if (i != users.size() - 1) {
+                stringBuilder.append(",");
+            }
+        }
+        AppUtil.copyToClipboard(mContext, stringBuilder.toString());
     }
 
     private void showImportDialog() {
