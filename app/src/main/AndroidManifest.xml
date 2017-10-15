@@ -43,6 +43,8 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".SendImageDynamicActivity"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".H5Activity"
+                  android:screenOrientation="portrait"/>
 
     </application>
 

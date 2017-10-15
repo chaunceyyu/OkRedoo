@@ -126,7 +126,9 @@ public class RedListener {
         mLiveList.clear();
         final Map<String, String> params = new HashMap<>();
         params.put("page", "1");
-        params.put("pageSize", "100");
+        params.put("pageSize", "200");
+
+
         RequestUtils.sendPostRequest(Api.HOME_LIVING_LIST, params, new ResponseCallBack<List<Live>>() {
             @Override
             public void onSuccess(List<Live> data) {

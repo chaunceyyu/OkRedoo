@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.youzi.okredoo.AccountListActivity;
+import com.youzi.okredoo.App;
 import com.youzi.okredoo.GetMoneyActivity;
+import com.youzi.okredoo.H5Activity;
 import com.youzi.okredoo.MyCircleActivity;
 import com.youzi.okredoo.R;
 import com.youzi.okredoo.UserInfoEditActivity;
@@ -20,6 +22,7 @@ import com.youzi.okredoo.UserLoginActivity;
 import com.youzi.okredoo.adapter.AccountListAdapter;
 import com.youzi.okredoo.adapter.AppBaseAdapter;
 import com.youzi.okredoo.data.DBManager;
+import com.youzi.okredoo.model.MyExperience;
 import com.youzi.okredoo.model.MyHots;
 import com.youzi.okredoo.model.User;
 import com.youzi.okredoo.net.Api;
@@ -31,6 +34,8 @@ import org.simple.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.youzi.okredoo.R.id.uid;
 
 /**
  * Created by zhangjiajie on 2017/10/8.
@@ -48,6 +53,7 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
     private TextView token;
     private TextView coin;
     private TextView piao;
+    private TextView tudouni;
 
     private TextView tokenState;
 
@@ -63,6 +69,7 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
     private AccountListActivity mActivity;
 
     public HashMap<String, MyHots> mMyHotsHashMap = new HashMap<>();
+    public HashMap<String, MyExperience> mMyExperienceHashMap = new HashMap<>();
 
     public AccountListItem(Context context) {
         super(context);
@@ -85,6 +92,7 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
         token = findViewById(R.id.token);
         coin = findViewById(R.id.coin);
         piao = findViewById(R.id.piao);
+        tudouni = findViewById(R.id.douni);
         photo = findViewById(R.id.photo);
         tokenState = findViewById(R.id.tokenState);
 
@@ -158,6 +166,20 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
             loadHots();
         }
 
+        MyExperience myExperience = mMyExperienceHashMap.get(mUser.getUid());
+        if (myExperience != null) {
+            tudouni.setText(myExperience.getBalance());
+        } else {
+            loadDouNi();
+        }
+
+        tudouni.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getContext().startActivity(H5Activity.newIntent(getContext(), App.H5_SHOP, mUser.getUid()));
+            }
+        });
+
     }
 
     private void loadHots() {
@@ -175,6 +197,22 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
             }
         });
 
+    }
+
+    private void loadDouNi() {
+        Map<String, String> params = new HashMap<>();
+        RequestUtils.sendPostRequest(Api.MY_EXPERIENCE, mUser.getUid(), mUser.getToken(), params, new ResponseCallBack<MyExperience>() {
+            @Override
+            public void onSuccess(MyExperience info) {
+                mMyExperienceHashMap.put(mUser.getUid(), info);
+                tudouni.setText(info.getBalance());
+            }
+
+            @Override
+            public void onFailure(ServiceException e) {
+                mActivity.showToast(e.getMsg());
+            }
+        });
     }
 
     @Override

@@ -65,6 +65,8 @@ import io.rong.imlib.model.Message;
 
 public class App extends Application {
 
+    public static final String H5_SHOP = "http://h5.mall.doubozhibo.com/index.html#/shop/main";
+
     private static Context sContext;
 
     public static int screenWidth, screenHeight;
