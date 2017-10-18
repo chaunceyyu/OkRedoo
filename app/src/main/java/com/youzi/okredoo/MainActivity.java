@@ -446,8 +446,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     public void showSpeedMenu() {
-        String[] textArray = new String[]{"600-1200ms", "800-1400ms", "1000-1600ms", "1200-1800ms(Default)", "1400-2000ms", "1600-2200ms",
-                "1800-2400ms", "2000-2600ms", "2200-2800ms"};
+        String[] textArray = new String[]{"500-700ms", "600-1200ms", "800-1400ms", "1000-1600ms", "1200-1800ms(Default)", "1400-2000ms",
+                "1600-2200ms", "1800-2400ms", "2000-2600ms", "2200-2800ms"};
 
         new MenuDialog(mContext).setMenuText(textArray)
                 .setOnItemClickListener(new MenuDialog.OnItemClickListener() {
@@ -455,39 +455,43 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     public void onItemClick(MenuDialog dialog, int index) {
                         switch (index) {
                             case 0:
+                                minMs = 500;
+                                maxMs = 700;
+
+                            case 1:
                                 minMs = 600;
                                 maxMs = 1200;
 
                                 break;
-                            case 1:
+                            case 2:
                                 minMs = 800;
                                 maxMs = 1400;
                                 break;
-                            case 2:
+                            case 3:
                                 minMs = 1000;
                                 maxMs = 1600;
                                 break;
-                            case 3:
+                            case 4:
                                 minMs = 1200;
                                 maxMs = 1800;
                                 break;
-                            case 4:
+                            case 5:
                                 minMs = 1400;
                                 maxMs = 2000;
                                 break;
-                            case 5:
+                            case 6:
                                 minMs = 1600;
                                 maxMs = 2200;
                                 break;
-                            case 6:
+                            case 7:
                                 minMs = 1800;
                                 maxMs = 2400;
                                 break;
-                            case 7:
+                            case 8:
                                 minMs = 2000;
                                 maxMs = 2600;
                                 break;
-                            case 8:
+                            case 9:
                                 minMs = 2200;
                                 maxMs = 2800;
                                 break;

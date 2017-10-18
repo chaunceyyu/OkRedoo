@@ -88,11 +88,7 @@ public class GetMoneyActivity extends BaseActivity {
     @Event(R.id.tvWithdrawLog)
     private void clickWithdrawLog(View view) {
         String url = "https://h5.tudouni.doubozhibo.com/tudouni/html/lp_get.html?uid=" + mUser.getUid() + "&token=" + mUser.getToken();
-        Intent intent = new Intent();
-        intent.setAction("android.intent.action.VIEW");
-        Uri content_url = Uri.parse(url);
-        intent.setData(content_url);
-        startActivity(intent);
+        startActivity(H5Activity.newIntent(mContext, url, mUser.getUid()));
     }
 
     @Event(R.id.tixianBtn)

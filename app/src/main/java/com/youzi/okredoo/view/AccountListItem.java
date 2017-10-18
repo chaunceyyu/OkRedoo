@@ -156,6 +156,15 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
         token.setText(mUser.getToken());
         coin.setText(mUser.getCoins());
 
+        coin.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "http://h5.tudouni.doubozhibo.com/tudouni/html/rebate.html?uid=" + mUser.getUid() + "&token=" + mUser.getToken() +
+                        "&type=1";
+                getContext().startActivity(H5Activity.newIntent(getContext(), url, mUser.getUid()));
+            }
+        });
+
 
         Glide.with(getContext()).load(mUser.getPhoto()).into(photo);
 
@@ -165,6 +174,14 @@ public class AccountListItem extends LinearLayout implements AppBaseAdapter.Bind
         } else {
             loadHots();
         }
+
+        piao.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "http://h5.tudouni.doubozhibo.com/tudouni/html/lp_get.html?uid=" + mUser.getUid() + "&token=" + mUser.getToken();
+                getContext().startActivity(H5Activity.newIntent(getContext(), url, mUser.getUid()));
+            }
+        });
 
         MyExperience myExperience = mMyExperienceHashMap.get(mUser.getUid());
         if (myExperience != null) {
