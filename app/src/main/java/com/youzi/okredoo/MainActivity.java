@@ -457,7 +457,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                             case 0:
                                 minMs = 500;
                                 maxMs = 700;
-
+                                break;
                             case 1:
                                 minMs = 600;
                                 maxMs = 1200;
